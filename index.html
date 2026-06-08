@@ -42,7 +42,7 @@
   <main class="app" id="appScreen">
     <section class="guide">
       <div class="guide-main"><span class="guide-icon">♢</span><span id="heroCopy">32チームの歴代先発QBから5人を探せ</span></div>
-      <div class="guide-chip">姓だけでもOK</div>
+      <div class="guide-chip">英語推奨／一部日本語OK</div>
       <div class="guide-chip">正解すると追加</div>
       <div class="guide-chip">5人正解でクリア</div>
     </section>
@@ -51,7 +51,7 @@
       <div class="start-card">
                 <div class="start-card-accent" aria-hidden="true"></div>
         <h2>あなたのチームの歴代QB、5人言えますか？</h2>
-        <p id="startCopy">NFLの32チームから好きなチームを1つ選び、<br>そのチームの歴代先発QBを5人、英語で答えましょう。<br>5人すべて正解でゲームクリアです！</p>
+        <p id="startCopy">NFLの32チームから好きなチームを1つ選び、<br>QB名を5人答えましょう。<br>英語入力が基本ですが、一部の有名QBは日本語名でも回答できます。</p>
         <button class="btn primary start-team-btn" id="openTeamSelectBtn" type="button">◇ チームを選ぶ</button>
         <div class="or">または</div>
         <div class="start-actions">
@@ -79,12 +79,12 @@
             <div class="pips" id="pips"></div>
           </div>
           <div class="answer-area">
-            <div class="input-label">次のQBを英語で入力</div>
+            <div class="input-label">QB名を入力</div>
             <div class="form" id="form">
-              <input id="guess" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="例） Joe Montana">
+              <input id="guess" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="例） Mahomes / マホームズ">
               <button id="submit">回答</button>
             </div>
-            <div class="hint-row"><div class="hint">※ フルネームまたは一意に特定できる名字で入力してください</div><button class="rule-link" id="ruleHelpBtn" type="button">判定ルール</button></div>
+            <div class="hint-row"><div class="hint">※ 英語推奨。一部の有名QBは日本語名でも回答できます</div><button class="rule-link" id="ruleHelpBtn" type="button">判定ルール</button></div>
             <div class="feedback" id="feedback"></div>
             <div class="got-title">正解したQB</div>
             <div class="got" id="got"></div>
@@ -113,14 +113,15 @@
       <h2 id="howToTitle">遊び方</h2>
       <p>チームを選び、歴代の先発QBを5人当てるクイズです。</p>
       <ul class="howto-list">
-        <li>QB名は英語で入力してください。</li>
+        <li>QB名は英語入力が基本です。一部の有名QBは日本語名でも回答できます。</li>
+        <li>例：Mahomes / マホームズ、Brady / ブレイディ</li>
         <li>フルネーム、またはチーム内で一意に特定できる名字で回答できます。</li>
         <li>大文字小文字、ピリオド、カンマ、アポストロフィ、ハイフンの違いは無視されます。</li>
         <li>軽いタイプミスは一部許容されますが、短い名前は誤判定を避けるため厳しめです。</li>
         <li>同じ名字のQBが複数いる場合は、フルネームで入力してください。</li>
         <li>ファーストネームだけでは回答できません。</li>
       </ul>
-      <div class="howto-note">文字の揺れは今の判定のままです。r/l のような発音寄りの置換は、誤判定を避けるため特別扱いしていません。</div>
+      <div class="howto-note">一部の有名QBには日本語名aliasesを設定しています。日本語入力は、表記ゆれを吸収したうえで完全一致した場合のみ正解になります。例：パトリック・マホームズ と パトリックマホームズ は同じ扱いです。r/l のような発音寄りの置換は、誤判定を避けるため特別扱いしていません。</div>
     </div>
   </div>
   <div class="foot">NFL歴代QBガントレット ／ Starting QB Gauntlet<br>制作：みすり（@misuri_edelman）</div>
@@ -160,6 +161,1405 @@ const TEAMS = [
 {ab:"SF",name:"San Francisco 49ers",jp:"\u30b5\u30f3\u30d5\u30e9\u30f3\u30b7\u30b9\u30b3\u30fb\u30d5\u30a9\u30fc\u30c6\u30a3\u30ca\u30a4\u30ca\u30fc\u30ba",conf:"NFC West",color:"#aa0000",qbs:[{n:"Joe Montana",y:"1979\u20131992"},{n:"Steve Young",y:"1987\u20131999"},{n:"John Brodie",y:"1957\u20131973"},{n:"Y.A. Tittle",y:"1951\u20131960"},{n:"Brock Purdy",y:"2022\u2013\u73fe\u5728"},{n:"Jimmy Garoppolo",y:"2017\u20132022"},{n:"Alex Smith",y:"2005\u20132012"},{n:"Jeff Garcia",y:"1999\u20132003"},{n:"Colin Kaepernick",y:"2012\u20132016"},{n:"Blaine Gabbert",y:"2015, 2016"},{n:"Steve DeBerg",y:"1978\u20131980"},{n:"Jim Plunkett",y:"1976, 1977"},{n:"Frankie Albert",y:"1950\u20131952"},{n:"Trey Lance",y:"2021, 2022"},{n:"Nick Mullens",y:"2018\u20132020"},{n:"C.J. Beathard",y:"2017, 2018, 2020"},{n:"Shaun Hill",y:"2008, 2009"},{n:"J.T. O'Sullivan",y:"2008"},{n:"Brian Hoyer",y:"2017"},{n:"Tim Rattay",y:"2003\u20132005"},{n:"Ken Dorsey",y:"2004, 2005"},{n:"Elvis Grbac",y:"1995, 1996"},{n:"Steve Bono",y:"1991"},{n:"Jeff Kemp",y:"1986"},{n:"Matt Cavanaugh",y:"1984, 1985"},{n:"Bob Gagliano",y:"1987"},{n:"Troy Smith",y:"2010"},{n:"Earl Morrall",y:"1956"},{n:"Lamar McHan",y:"1963"},{n:"Steve Spurrier",y:"1967, 1969, 1972\u20131975"},{n:"Tom Owen",y:"1974, 1975"},{n:"Norm Snead",y:"1974, 1975"},{n:"Scott Bull",y:"1976, 1978"},{n:"Jim Druckenmiller",y:"1997"},{n:"Ty Detmer",y:"1998"},{n:"Steve Stenstrom",y:"1999"},{n:"Chris Weinke",y:"2007"},{n:"Trent Dilfer",y:"2007"},{n:"Sam Darnold",y:"2023"},{n:"Brandon Allen",y:"2024"},{n:"Joshua Dobbs",y:"2024"},{n:"Mac Jones",y:"2025"},{n:"Cody Pickett",y:"2005"},{n:"Jim Powers",y:"1953"},{n:"Jim Cason",y:"1954"},{n:"Bob Waters",y:"1963"},{n:"George Mira",y:"1964\u20131967"},{n:"Joe Reed",y:"1973, 1974"},{n:"Dennis Morrison",y:"1974"}]},
 {ab:"SEA",name:"Seattle Seahawks",jp:"\u30b7\u30a2\u30c8\u30eb\u30fb\u30b7\u30fc\u30db\u30fc\u30af\u30b9",conf:"NFC West",color:"#69be28",qbs:[{n:"Russell Wilson",y:"2012\u20132021"},{n:"Matt Hasselbeck",y:"2001\u20132010"},{n:"Dave Krieg",y:"1981\u20131991"},{n:"Jim Zorn",y:"1976\u20131984"},{n:"Geno Smith",y:"2021\u20132024"},{n:"Rick Mirer",y:"1993\u20131996"},{n:"Warren Moon",y:"1997, 1998"},{n:"Jon Kitna",y:"1997\u20132000"},{n:"Sam Darnold",y:"2025"},{n:"Tarvaris Jackson",y:"2011"},{n:"Charlie Whitehurst",y:"2010, 2011"},{n:"Seneca Wallace",y:"2006, 2008, 2009"},{n:"Drew Lock",y:"2023"},{n:"John Friesz",y:"1995\u20131998"},{n:"Stan Gelbaugh",y:"1992, 1996"},{n:"Trent Dilfer",y:"2001\u20132004"},{n:"Brock Huard",y:"2000"},{n:"Glenn Foley",y:"1999"},{n:"Charlie Frye",y:"2008"},{n:"Dan McGwire",y:"1991\u20131994"},{n:"Kelly Stouffer",y:"1988\u20131992"},{n:"Gale Gilbert",y:"1986"},{n:"Bruce Mathison",y:"1987"},{n:"Jeff Kemp",y:"1987, 1988, 1991"},{n:"Steve Myer",y:"1977"}]}
 ];
+
+// QB Japanese aliases mapping generated from index(12).html
+// Key format: TEAM_AB|EN_NAME
+const QB_JA_ALIASES = {
+  "KC|Joe Montana": [
+    "ジョーモンタナ",
+    "ジョー・モンタナ",
+    "モンタナ"
+  ],
+  "BUF|Josh Allen": [
+    "ジョシュアレン",
+    "ジョシュ・アレン"
+  ],
+  "BUF|Jim Kelly": [
+    "ジムケリー",
+    "ジム・ケリー",
+    "ケリー"
+  ],
+  "BUF|Joe Ferguson": [
+    "ジョーファーガソン",
+    "ジョー・ファーガソン",
+    "ファーガソン"
+  ],
+  "BUF|Jack Kemp": [
+    "ジャックケンプ",
+    "ジャック・ケンプ",
+    "ケンプ"
+  ],
+  "BUF|Daryle Lamonica": [
+    "ダリルラモニカ",
+    "ダリル・ラモニカ",
+    "ラモニカ"
+  ],
+  "BUF|Tyrod Taylor": [
+    "タイロッドテイラー",
+    "タイロッド・テイラー"
+  ],
+  "BUF|Drew Bledsoe": [
+    "ドリューブレッドソー",
+    "ドリュー・ブレッドソー",
+    "ブレッドソー"
+  ],
+  "BUF|Ryan Fitzpatrick": [
+    "ライアンフィッツパトリック",
+    "ライアン・フィッツパトリック",
+    "フィッツパトリック"
+  ],
+  "MIA|Dan Marino": [
+    "ダンマリーノ",
+    "ダン・マリーノ",
+    "マリーノ"
+  ],
+  "MIA|Bob Griese": [
+    "ボブグリーシー",
+    "ボブ・グリーシー",
+    "グリーシー"
+  ],
+  "MIA|Tua Tagovailoa": [
+    "トゥア",
+    "トゥアタゴヴァイロア",
+    "トゥア・タゴヴァイロア",
+    "タゴヴァイロア"
+  ],
+  "MIA|Jay Fiedler": [
+    "ジェイフィードラー",
+    "ジェイ・フィードラー",
+    "フィードラー"
+  ],
+  "MIA|Ryan Tannehill": [
+    "ライアンタネヒル",
+    "ライアン・タネヒル",
+    "タネヒル"
+  ],
+  "MIA|David Woodley": [
+    "デビッドウッドリー",
+    "デビッド・ウッドリー",
+    "ウッドリー"
+  ],
+  "MIA|Don Strock": [
+    "ドンストロック",
+    "ドン・ストロック",
+    "ストロック"
+  ],
+  "MIA|Chad Pennington": [
+    "チャドペニントン",
+    "チャド・ペニントン",
+    "ペニントン"
+  ],
+  "NE|Tom Brady": [
+    "トムブレイディ",
+    "トム・ブレイディ",
+    "ブレイディ"
+  ],
+  "NE|Drew Bledsoe": [
+    "ドリューブレッドソー",
+    "ドリュー・ブレッドソー",
+    "ブレッドソー"
+  ],
+  "NE|Steve Grogan": [
+    "スティーブグローガン",
+    "スティーブ・グローガン",
+    "グローガン"
+  ],
+  "NE|Babe Parilli": [
+    "ベーブパリリ",
+    "ベーブ・パリリ",
+    "パリリ"
+  ],
+  "NE|Tony Eason": [
+    "トニーイーソン",
+    "トニー・イーソン",
+    "イーソン"
+  ],
+  "NE|Jim Plunkett": [
+    "ジムプランケット",
+    "ジム・プランケット",
+    "プランケット"
+  ],
+  "NE|Mac Jones": [
+    "マックジョーンズ",
+    "マック・ジョーンズ"
+  ],
+  "NE|Drake Maye": [
+    "ドレイクメイ",
+    "ドレイク・メイ",
+    "メイ"
+  ],
+  "NE|Matt Cavanaugh": [
+    "マットキャバノー",
+    "マット・キャバノー",
+    "キャバノー"
+  ],
+  "NE|Doug Flutie": [
+    "ダグフルーティ",
+    "ダグ・フルーティ",
+    "フルーティ"
+  ],
+  "NYJ|Joe Namath": [
+    "ジョーネイマス",
+    "ジョー・ネイマス",
+    "ネイマス"
+  ],
+  "NYJ|Ken O'Brien": [
+    "ケンオブライエン",
+    "ケン・オブライエン",
+    "オブライエン"
+  ],
+  "NYJ|Richard Todd": [
+    "リチャードトッド",
+    "リチャード・トッド",
+    "トッド"
+  ],
+  "NYJ|Chad Pennington": [
+    "チャドペニントン",
+    "チャド・ペニントン",
+    "ペニントン"
+  ],
+  "NYJ|Vinny Testaverde": [
+    "ビニーテスタバーディ",
+    "ビニー・テスタバーディ",
+    "テスタバーディ"
+  ],
+  "NYJ|Mark Sanchez": [
+    "マークサンチェス",
+    "マーク・サンチェス",
+    "サンチェス"
+  ],
+  "NYJ|Sam Darnold": [
+    "サムダーノルド",
+    "サム・ダーノルド",
+    "ダーノルド"
+  ],
+  "NYJ|Zach Wilson": [
+    "ザックウィルソン",
+    "ザック・ウィルソン"
+  ],
+  "BAL|Lamar Jackson": [
+    "ラマージャクソン",
+    "ラマー・ジャクソン",
+    "ラマー"
+  ],
+  "BAL|Joe Flacco": [
+    "ジョーフラッコ",
+    "ジョー・フラッコ",
+    "フラッコ"
+  ],
+  "BAL|Kyle Boller": [
+    "カイルボーラー",
+    "カイル・ボーラー",
+    "ボーラー"
+  ],
+  "BAL|Vinny Testaverde": [
+    "ビニーテスタバーディ",
+    "ビニー・テスタバーディ",
+    "テスタバーディ"
+  ],
+  "BAL|Tony Banks": [
+    "トニーバンクス",
+    "トニー・バンクス",
+    "バンクス"
+  ],
+  "BAL|Steve McNair": [
+    "スティーブマクネア",
+    "スティーブ・マクネア",
+    "マクネア"
+  ],
+  "BAL|Tyler Huntley": [
+    "タイラーハントリー",
+    "タイラー・ハントリー",
+    "ハントリー"
+  ],
+  "BAL|Trent Dilfer": [
+    "トレントディルファー",
+    "トレント・ディルファー",
+    "ディルファー"
+  ],
+  "CIN|Ken Anderson": [
+    "ケンアンダーソン",
+    "ケン・アンダーソン",
+    "アンダーソン"
+  ],
+  "CIN|Andy Dalton": [
+    "アンディダルトン",
+    "アンディ・ダルトン",
+    "ダルトン"
+  ],
+  "CIN|Boomer Esiason": [
+    "ブーマーアサイアソン",
+    "ブーマー・アサイアソン",
+    "アサイアソン"
+  ],
+  "CIN|Carson Palmer": [
+    "カーソンパーマー",
+    "カーソン・パーマー",
+    "パーマー"
+  ],
+  "CIN|Joe Burrow": [
+    "ジョーバロウ",
+    "ジョー・バロウ",
+    "バロウ"
+  ],
+  "CIN|Jeff Blake": [
+    "ジェフブレイク",
+    "ジェフ・ブレイク",
+    "ブレイク"
+  ],
+  "CIN|Jon Kitna": [
+    "ジョンキトナ",
+    "ジョン・キトナ",
+    "キトナ"
+  ],
+  "CIN|Virgil Carter": [
+    "バージルカーター",
+    "バージル・カーター",
+    "カーター"
+  ],
+  "CLE|Otto Graham": [
+    "オットーグレアム",
+    "オットー・グレアム",
+    "グレアム"
+  ],
+  "CLE|Brian Sipe": [
+    "ブライアンサイプ",
+    "ブライアン・サイプ",
+    "サイプ"
+  ],
+  "CLE|Bernie Kosar": [
+    "バーニーコーザー",
+    "バーニー・コーザー",
+    "コーザー"
+  ],
+  "CLE|Frank Ryan": [
+    "フランクライアン",
+    "フランク・ライアン"
+  ],
+  "CLE|Tim Couch": [
+    "ティムカウチ",
+    "ティム・カウチ",
+    "カウチ"
+  ],
+  "CLE|Baker Mayfield": [
+    "ベイカーメイフィールド",
+    "ベイカー・メイフィールド",
+    "メイフィールド"
+  ],
+  "CLE|Milt Plum": [
+    "ミルトプラム",
+    "ミルト・プラム",
+    "プラム"
+  ],
+  "CLE|Bill Nelsen": [
+    "ビルネルセン",
+    "ビル・ネルセン",
+    "ネルセン"
+  ],
+  "PIT|Ben Roethlisberger": [
+    "ベンロスリスバーガー",
+    "ベン・ロスリスバーガー",
+    "ビッグベン",
+    "ロスリスバーガー"
+  ],
+  "PIT|Terry Bradshaw": [
+    "テリーブラッドショー",
+    "テリー・ブラッドショー",
+    "ブラッドショー"
+  ],
+  "PIT|Kordell Stewart": [
+    "コーデルスチュワート",
+    "コーデル・スチュワート",
+    "スチュワート"
+  ],
+  "PIT|Neil O'Donnell": [
+    "ニールオドネル",
+    "ニール・オドネル",
+    "オドネル"
+  ],
+  "PIT|Bubby Brister": [
+    "バビーブリスター",
+    "バビー・ブリスター",
+    "ブリスター"
+  ],
+  "PIT|Bobby Layne": [
+    "ボビーレイン",
+    "ボビー・レイン",
+    "レイン"
+  ],
+  "PIT|Mike Tomczak": [
+    "マイクトムザック",
+    "マイク・トムザック",
+    "トムザック"
+  ],
+  "PIT|Mark Malone": [
+    "マークマローン",
+    "マーク・マローン",
+    "マローン"
+  ],
+  "PIT|Tommy Maddox": [
+    "トミーマドックス",
+    "トミー・マドックス",
+    "マドックス"
+  ],
+  "PIT|Charlie Batch": [
+    "チャーリーバッチ",
+    "チャーリー・バッチ",
+    "バッチ"
+  ],
+  "HOU|C.J. Stroud": [
+    "CJストラウド",
+    "シージェイストラウド",
+    "シージェイ・ストラウド",
+    "ストラウド"
+  ],
+  "HOU|Deshaun Watson": [
+    "デショーンワトソン",
+    "デショーン・ワトソン",
+    "ワトソン"
+  ],
+  "HOU|Matt Schaub": [
+    "マットショーブ",
+    "マット・ショーブ",
+    "ショーブ"
+  ],
+  "HOU|David Carr": [
+    "デビッドカー",
+    "デビッド・カー"
+  ],
+  "HOU|Davis Mills": [
+    "デイビスミルズ",
+    "デイビス・ミルズ",
+    "ミルズ"
+  ],
+  "HOU|Brock Osweiler": [
+    "ブロックオズワイラー",
+    "ブロック・オズワイラー",
+    "オズワイラー"
+  ],
+  "HOU|Ryan Fitzpatrick": [
+    "ライアンフィッツパトリック",
+    "ライアン・フィッツパトリック",
+    "フィッツパトリック"
+  ],
+  "HOU|Brian Hoyer": [
+    "ブライアンホイヤー",
+    "ブライアン・ホイヤー",
+    "ホイヤー"
+  ],
+  "IND|Peyton Manning": [
+    "ペイトンマニング",
+    "ペイトン・マニング"
+  ],
+  "IND|Johnny Unitas": [
+    "ジョニーユナイタス",
+    "ジョニー・ユナイタス",
+    "ユナイタス"
+  ],
+  "IND|Andrew Luck": [
+    "アンドリューラック",
+    "アンドリュー・ラック",
+    "ラック"
+  ],
+  "IND|Bert Jones": [
+    "バートジョーンズ",
+    "バート・ジョーンズ"
+  ],
+  "IND|Jim Harbaugh": [
+    "ジムハーボー",
+    "ジム・ハーボー",
+    "ハーボー"
+  ],
+  "IND|Jeff George": [
+    "ジェフジョージ",
+    "ジェフ・ジョージ",
+    "ジョージ"
+  ],
+  "IND|Jack Trudeau": [
+    "ジャックトルドー",
+    "ジャック・トルドー",
+    "トルドー"
+  ],
+  "IND|Mike Pagel": [
+    "マイクペイゲル",
+    "マイク・ペイゲル",
+    "ペイゲル"
+  ],
+  "IND|Earl Morrall": [
+    "アールモラル",
+    "アール・モラル",
+    "モラル"
+  ],
+  "IND|Jacoby Brissett": [
+    "ジャコビーブリセット",
+    "ジャコビー・ブリセット",
+    "ブリセット"
+  ],
+  "JAX|Mark Brunell": [
+    "マークブルネル",
+    "マーク・ブルネル",
+    "ブルネル"
+  ],
+  "JAX|Trevor Lawrence": [
+    "トレバーローレンス",
+    "トレバー・ローレンス",
+    "ローレンス"
+  ],
+  "JAX|David Garrard": [
+    "デビッドギャラード",
+    "デビッド・ギャラード",
+    "ギャラード"
+  ],
+  "JAX|Blake Bortles": [
+    "ブレイクボートルス",
+    "ブレイク・ボートルス",
+    "ボートルス"
+  ],
+  "JAX|Byron Leftwich": [
+    "バイロンレフトウィッチ",
+    "バイロン・レフトウィッチ",
+    "レフトウィッチ"
+  ],
+  "JAX|Chad Henne": [
+    "チャドヘニー",
+    "チャド・ヘニー",
+    "ヘニー"
+  ],
+  "JAX|Blaine Gabbert": [
+    "ブレインギャバート",
+    "ブレイン・ギャバート",
+    "ギャバート"
+  ],
+  "JAX|Gardner Minshew": [
+    "ガードナーミンシュー",
+    "ガードナー・ミンシュー",
+    "ミンシュー"
+  ],
+  "TEN|Warren Moon": [
+    "ウォーレンムーン",
+    "ウォーレン・ムーン"
+  ],
+  "TEN|Steve McNair": [
+    "スティーブマクネア",
+    "スティーブ・マクネア",
+    "マクネア"
+  ],
+  "TEN|Dan Pastorini": [
+    "ダンパストリーニ",
+    "ダン・パストリーニ",
+    "パストリーニ"
+  ],
+  "TEN|George Blanda": [
+    "ジョージブランダ",
+    "ジョージ・ブランダ",
+    "ブランダ"
+  ],
+  "TEN|Ryan Tannehill": [
+    "ライアンタネヒル",
+    "ライアン・タネヒル",
+    "タネヒル"
+  ],
+  "TEN|Marcus Mariota": [
+    "マーカスマリオタ",
+    "マーカス・マリオタ",
+    "マリオタ"
+  ],
+  "TEN|Vince Young": [
+    "ビンスヤング",
+    "ビンス・ヤング"
+  ],
+  "TEN|Will Levis": [
+    "ウィルレビス",
+    "ウィル・レビス",
+    "レビス"
+  ],
+  "DEN|John Elway": [
+    "ジョンエルウェイ",
+    "ジョン・エルウェイ",
+    "エルウェイ"
+  ],
+  "DEN|Craig Morton": [
+    "クレイグモートン",
+    "クレイグ・モートン",
+    "モートン"
+  ],
+  "DEN|Peyton Manning": [
+    "ペイトンマニング",
+    "ペイトン・マニング"
+  ],
+  "DEN|Jake Plummer": [
+    "ジェイクプラマー",
+    "ジェイク・プラマー",
+    "プラマー"
+  ],
+  "DEN|Brian Griese": [
+    "ブライアングリーシー",
+    "ブライアン・グリーシー",
+    "グリーシー"
+  ],
+  "DEN|Frank Tripucka": [
+    "フランクトリプカ",
+    "フランク・トリプカ",
+    "トリプカ"
+  ],
+  "DEN|Jay Cutler": [
+    "ジェイカトラー",
+    "ジェイ・カトラー",
+    "カトラー"
+  ],
+  "DEN|Steve Ramsey": [
+    "スティーブラムジー",
+    "スティーブ・ラムジー",
+    "ラムジー"
+  ],
+  "DEN|Charley Johnson": [
+    "チャーリージョンソン",
+    "チャーリー・ジョンソン"
+  ],
+  "DEN|Bo Nix": [
+    "ボーニックス",
+    "ボー・ニックス",
+    "ニックス"
+  ],
+  "KC|Patrick Mahomes": [
+    "パトリックマホームズ",
+    "パトリック・マホームズ",
+    "マホームズ"
+  ],
+  "KC|Len Dawson": [
+    "レンドーソン",
+    "レン・ドーソン",
+    "ドーソン"
+  ],
+  "KC|Trent Green": [
+    "トレントグリーン",
+    "トレント・グリーン"
+  ],
+  "KC|Bill Kenney": [
+    "ビルケニー",
+    "ビル・ケニー",
+    "ケニー"
+  ],
+  "KC|Alex Smith": [
+    "アレックススミス",
+    "アレックス・スミス"
+  ],
+  "KC|Mike Livingston": [
+    "マイクリビングストン",
+    "マイク・リビングストン",
+    "リビングストン"
+  ],
+  "KC|Steve DeBerg": [
+    "スティーブデバーグ",
+    "スティーブ・デバーグ",
+    "デバーグ"
+  ],
+  "KC|Elvis Grbac": [
+    "エルビスガーバック",
+    "エルビス・ガーバック",
+    "ガーバック"
+  ],
+  "KC|Matt Cassel": [
+    "マットキャッセル",
+    "マット・キャッセル",
+    "キャッセル"
+  ],
+  "KC|Steve Fuller": [
+    "スティーブフラー",
+    "スティーブ・フラー",
+    "フラー"
+  ],
+  "LV|Derek Carr": [
+    "デレックカー",
+    "デレック・カー"
+  ],
+  "LV|Ken Stabler": [
+    "ケンステイブラー",
+    "ケン・ステイブラー",
+    "ステイブラー"
+  ],
+  "LV|Daryle Lamonica": [
+    "ダリルラモニカ",
+    "ダリル・ラモニカ",
+    "ラモニカ"
+  ],
+  "LV|Rich Gannon": [
+    "リッチギャノン",
+    "リッチ・ギャノン",
+    "ギャノン"
+  ],
+  "LV|Tom Flores": [
+    "トムフローレス",
+    "トム・フローレス",
+    "フローレス"
+  ],
+  "LV|Jim Plunkett": [
+    "ジムプランケット",
+    "ジム・プランケット",
+    "プランケット"
+  ],
+  "LV|Jeff Hostetler": [
+    "ジェフホステトラー",
+    "ジェフ・ホステトラー",
+    "ホステトラー"
+  ],
+  "LV|Jay Schroeder": [
+    "ジェイシュローダー",
+    "ジェイ・シュローダー",
+    "シュローダー"
+  ],
+  "LV|Marc Wilson": [
+    "マークウィルソン",
+    "マーク・ウィルソン"
+  ],
+  "LV|Cotton Davidson": [
+    "コットンデビッドソン",
+    "コットン・デビッドソン",
+    "デビッドソン"
+  ],
+  "LAC|Philip Rivers": [
+    "フィリップリバース",
+    "フィリップ・リバース",
+    "リバース"
+  ],
+  "LAC|Dan Fouts": [
+    "ダンファウツ",
+    "ダン・ファウツ",
+    "ファウツ"
+  ],
+  "LAC|John Hadl": [
+    "ジョンヘイドル",
+    "ジョン・ヘイドル",
+    "ヘイドル"
+  ],
+  "LAC|Stan Humphries": [
+    "スタンハンフリーズ",
+    "スタン・ハンフリーズ",
+    "ハンフリーズ"
+  ],
+  "LAC|Justin Herbert": [
+    "ジャスティンハーバート",
+    "ジャスティン・ハーバート",
+    "ハーバート"
+  ],
+  "LAC|Drew Brees": [
+    "ドリューブリーズ",
+    "ドリュー・ブリーズ",
+    "ブリーズ"
+  ],
+  "LAC|Jack Kemp": [
+    "ジャックケンプ",
+    "ジャック・ケンプ",
+    "ケンプ"
+  ],
+  "LAC|Tobin Rote": [
+    "トビンロート",
+    "トビン・ロート",
+    "ロート"
+  ],
+  "DAL|Troy Aikman": [
+    "トロイエイクマン",
+    "トロイ・エイクマン",
+    "エイクマン"
+  ],
+  "DAL|Dak Prescott": [
+    "ダックプレスコット",
+    "ダック・プレスコット",
+    "プレスコット"
+  ],
+  "DAL|Tony Romo": [
+    "トニーロモ",
+    "トニー・ロモ",
+    "ロモ"
+  ],
+  "DAL|Roger Staubach": [
+    "ロジャーストーバック",
+    "ロジャー・ストーバック",
+    "ストーバック"
+  ],
+  "DAL|Danny White": [
+    "ダニーホワイト",
+    "ダニー・ホワイト"
+  ],
+  "DAL|Don Meredith": [
+    "ドンメレディス",
+    "ドン・メレディス",
+    "メレディス"
+  ],
+  "DAL|Craig Morton": [
+    "クレイグモートン",
+    "クレイグ・モートン",
+    "モートン"
+  ],
+  "DAL|Quincy Carter": [
+    "クインシーカーター",
+    "クインシー・カーター",
+    "カーター"
+  ],
+  "DAL|Cooper Rush": [
+    "クーパーラッシュ",
+    "クーパー・ラッシュ",
+    "ラッシュ"
+  ],
+  "DAL|Drew Bledsoe": [
+    "ドリューブレッドソー",
+    "ドリュー・ブレッドソー",
+    "ブレッドソー"
+  ],
+  "NYG|Eli Manning": [
+    "イーライマニング",
+    "イーライ・マニング"
+  ],
+  "NYG|Phil Simms": [
+    "フィルシムズ",
+    "フィル・シムズ",
+    "シムズ"
+  ],
+  "NYG|Kerry Collins": [
+    "ケリーコリンズ",
+    "ケリー・コリンズ",
+    "コリンズ"
+  ],
+  "NYG|Daniel Jones": [
+    "ダニエルジョーンズ",
+    "ダニエル・ジョーンズ"
+  ],
+  "NYG|Charlie Conerly": [
+    "チャーリーコナリー",
+    "チャーリー・コナリー",
+    "コナリー"
+  ],
+  "NYG|Fran Tarkenton": [
+    "フランターケントン",
+    "フラン・ターケントン",
+    "ターケントン"
+  ],
+  "NYG|Y.A. Tittle": [
+    "YAティトル",
+    "ワイエーティトル",
+    "ワイエー・ティトル",
+    "ティトル"
+  ],
+  "NYG|Jeff Hostetler": [
+    "ジェフホステトラー",
+    "ジェフ・ホステトラー",
+    "ホステトラー"
+  ],
+  "PHI|Donovan McNabb": [
+    "ドノバンマクナブ",
+    "ドノバン・マクナブ",
+    "マクナブ"
+  ],
+  "PHI|Ron Jaworski": [
+    "ロンジャウォースキー",
+    "ロン・ジャウォースキー",
+    "ジャウォースキー"
+  ],
+  "PHI|Randall Cunningham": [
+    "ランドールカニンガム",
+    "ランドール・カニンガム",
+    "カニンガム"
+  ],
+  "PHI|Jalen Hurts": [
+    "ジェイレンハーツ",
+    "ジェイレン・ハーツ",
+    "ハーツ"
+  ],
+  "PHI|Norm Snead": [
+    "ノームスニード",
+    "ノーム・スニード",
+    "スニード"
+  ],
+  "PHI|Carson Wentz": [
+    "カーソンウェンツ",
+    "カーソン・ウェンツ",
+    "ウェンツ"
+  ],
+  "PHI|Nick Foles": [
+    "ニックフォールズ",
+    "ニック・フォールズ",
+    "フォールズ"
+  ],
+  "PHI|Norm Van Brocklin": [
+    "ノーム・バンブロックリン",
+    "ノーム・バン・ブロックリン",
+    "ブロックリン"
+  ],
+  "PHI|Sonny Jurgensen": [
+    "ソニージャーゲンセン",
+    "ソニー・ジャーゲンセン",
+    "ジャーゲンセン"
+  ],
+  "PHI|Roman Gabriel": [
+    "ローマンゲイブリエル",
+    "ローマン・ゲイブリエル",
+    "ゲイブリエル"
+  ],
+  "WAS|Sonny Jurgensen": [
+    "ソニージャーゲンセン",
+    "ソニー・ジャーゲンセン",
+    "ジャーゲンセン"
+  ],
+  "WAS|Joe Theismann": [
+    "ジョーサイズマン",
+    "ジョー・サイズマン",
+    "サイズマン"
+  ],
+  "WAS|Mark Rypien": [
+    "マークライピン",
+    "マーク・ライピン",
+    "ライピン"
+  ],
+  "WAS|Billy Kilmer": [
+    "ビリーキルマー",
+    "ビリー・キルマー",
+    "キルマー"
+  ],
+  "WAS|Kirk Cousins": [
+    "カークカズンズ",
+    "カーク・カズンズ",
+    "カズンズ"
+  ],
+  "WAS|Robert Griffin III": [
+    "RG3",
+    "アールジースリー",
+    "ロバートグリフィン",
+    "ロバート・グリフィン"
+  ],
+  "WAS|Jason Campbell": [
+    "ジェイソンキャンベル",
+    "ジェイソン・キャンベル",
+    "キャンベル"
+  ],
+  "WAS|Gus Frerotte": [
+    "ガスフローロット",
+    "ガス・フローロット",
+    "フローロット"
+  ],
+  "CHI|Jay Cutler": [
+    "ジェイカトラー",
+    "ジェイ・カトラー",
+    "カトラー"
+  ],
+  "CHI|Jim McMahon": [
+    "ジムマクマーン",
+    "ジム・マクマーン",
+    "マクマーン"
+  ],
+  "CHI|Jim Harbaugh": [
+    "ジムハーボー",
+    "ジム・ハーボー",
+    "ハーボー"
+  ],
+  "CHI|Caleb Williams": [
+    "ケイレブウィリアムズ",
+    "ケイレブ・ウィリアムズ"
+  ],
+  "CHI|Mitchell Trubisky": [
+    "ミッチェルトゥルビスキー",
+    "ミッチェル・トゥルビスキー",
+    "トゥルビスキー"
+  ],
+  "CHI|Erik Kramer": [
+    "エリッククレイマー",
+    "エリック・クレイマー",
+    "クレイマー"
+  ],
+  "CHI|Justin Fields": [
+    "ジャスティンフィールズ",
+    "ジャスティン・フィールズ",
+    "フィールズ"
+  ],
+  "CHI|Ed Brown": [
+    "エドブラウン",
+    "エド・ブラウン"
+  ],
+  "DET|Matthew Stafford": [
+    "マシュースタッフォード",
+    "マシュー・スタッフォード",
+    "スタッフォード"
+  ],
+  "DET|Jared Goff": [
+    "ジャレッドゴフ",
+    "ジャレッド・ゴフ",
+    "ゴフ"
+  ],
+  "DET|Bobby Layne": [
+    "ボビーレイン",
+    "ボビー・レイン",
+    "レイン"
+  ],
+  "DET|Greg Landry": [
+    "グレッグランドリー",
+    "グレッグ・ランドリー",
+    "ランドリー"
+  ],
+  "DET|Scott Mitchell": [
+    "スコットミッチェル",
+    "スコット・ミッチェル",
+    "ミッチェル"
+  ],
+  "DET|Bill Munson": [
+    "ビルマンソン",
+    "ビル・マンソン",
+    "マンソン"
+  ],
+  "DET|Gary Danielson": [
+    "ゲイリーダニエルソン",
+    "ゲイリー・ダニエルソン",
+    "ダニエルソン"
+  ],
+  "DET|Eric Hipple": [
+    "エリックヒップル",
+    "エリック・ヒップル",
+    "ヒップル"
+  ],
+  "GB|Brett Favre": [
+    "ブレットファーブ",
+    "ブレット・ファーブ",
+    "ファーブ"
+  ],
+  "GB|Aaron Rodgers": [
+    "アーロンロジャース",
+    "アーロン・ロジャース",
+    "ロジャース"
+  ],
+  "GB|Bart Starr": [
+    "バートスター",
+    "バート・スター",
+    "スター"
+  ],
+  "GB|Jordan Love": [
+    "ジョーダンラブ",
+    "ジョーダン・ラブ",
+    "ラブ"
+  ],
+  "GB|Lynn Dickey": [
+    "リンディッキー",
+    "リン・ディッキー",
+    "ディッキー"
+  ],
+  "GB|Tobin Rote": [
+    "トビンロート",
+    "トビン・ロート",
+    "ロート"
+  ],
+  "GB|Don Majkowski": [
+    "ドンマイコウスキー",
+    "ドン・マイコウスキー",
+    "マイコウスキー"
+  ],
+  "GB|David Whitehurst": [
+    "デビッドホワイトハースト",
+    "デビッド・ホワイトハースト",
+    "ホワイトハースト"
+  ],
+  "GB|Randy Wright": [
+    "ランディライト",
+    "ランディ・ライト",
+    "ライト"
+  ],
+  "GB|Brett Hundley": [
+    "ブレットハンドリー",
+    "ブレット・ハンドリー",
+    "ハンドリー"
+  ],
+  "MIN|Fran Tarkenton": [
+    "フランターケントン",
+    "フラン・ターケントン",
+    "ターケントン"
+  ],
+  "MIN|Tommy Kramer": [
+    "トミークレイマー",
+    "トミー・クレイマー",
+    "クレイマー"
+  ],
+  "MIN|Wade Wilson": [
+    "ウェイドウィルソン",
+    "ウェイド・ウィルソン"
+  ],
+  "MIN|Kirk Cousins": [
+    "カークカズンズ",
+    "カーク・カズンズ",
+    "カズンズ"
+  ],
+  "MIN|Daunte Culpepper": [
+    "ダンテカルペッパー",
+    "ダンテ・カルペッパー",
+    "カルペッパー"
+  ],
+  "MIN|Warren Moon": [
+    "ウォーレンムーン",
+    "ウォーレン・ムーン"
+  ],
+  "MIN|Brad Johnson": [
+    "ブラッドジョンソン",
+    "ブラッド・ジョンソン"
+  ],
+  "MIN|Randall Cunningham": [
+    "ランドールカニンガム",
+    "ランドール・カニンガム",
+    "カニンガム"
+  ],
+  "MIN|Brett Favre": [
+    "ブレットファーブ",
+    "ブレット・ファーブ",
+    "ファーブ"
+  ],
+  "MIN|Joe Kapp": [
+    "ジョーカップ",
+    "ジョー・カップ",
+    "カップ"
+  ],
+  "ATL|Matt Ryan": [
+    "マットライアン",
+    "マット・ライアン"
+  ],
+  "ATL|Steve Bartkowski": [
+    "スティーブバートコウスキー",
+    "スティーブ・バートコウスキー",
+    "バートコウスキー"
+  ],
+  "ATL|Michael Vick": [
+    "マイケルヴィック",
+    "マイケル・ヴィック",
+    "ヴィック"
+  ],
+  "ATL|Chris Chandler": [
+    "クリスチャンドラー",
+    "クリス・チャンドラー",
+    "チャンドラー"
+  ],
+  "ATL|Chris Miller": [
+    "クリスミラー",
+    "クリス・ミラー",
+    "ミラー"
+  ],
+  "ATL|Jeff George": [
+    "ジェフジョージ",
+    "ジェフ・ジョージ",
+    "ジョージ"
+  ],
+  "ATL|Bobby Hebert": [
+    "ボビーエベア",
+    "ボビー・エベア",
+    "エベア"
+  ],
+  "ATL|Kirk Cousins": [
+    "カークカズンズ",
+    "カーク・カズンズ",
+    "カズンズ"
+  ],
+  "CAR|Cam Newton": [
+    "キャムニュートン",
+    "キャム・ニュートン",
+    "ニュートン"
+  ],
+  "CAR|Jake Delhomme": [
+    "ジェイクデローム",
+    "ジェイク・デローム",
+    "デローム"
+  ],
+  "CAR|Kerry Collins": [
+    "ケリーコリンズ",
+    "ケリー・コリンズ",
+    "コリンズ"
+  ],
+  "CAR|Steve Beuerlein": [
+    "スティーブバイアライン",
+    "スティーブ・バイアライン",
+    "バイアライン"
+  ],
+  "CAR|Bryce Young": [
+    "ブライスヤング",
+    "ブライス・ヤング"
+  ],
+  "CAR|Baker Mayfield": [
+    "ベイカーメイフィールド",
+    "ベイカー・メイフィールド",
+    "メイフィールド"
+  ],
+  "CAR|Sam Darnold": [
+    "サムダーノルド",
+    "サム・ダーノルド",
+    "ダーノルド"
+  ],
+  "CAR|Andy Dalton": [
+    "アンディダルトン",
+    "アンディ・ダルトン",
+    "ダルトン"
+  ],
+  "NO|Drew Brees": [
+    "ドリューブリーズ",
+    "ドリュー・ブリーズ",
+    "ブリーズ"
+  ],
+  "NO|Archie Manning": [
+    "アーチーマニング",
+    "アーチー・マニング"
+  ],
+  "NO|Aaron Brooks": [
+    "アーロンブルックス",
+    "アーロン・ブルックス",
+    "ブルックス"
+  ],
+  "NO|Bobby Hebert": [
+    "ボビーエベア",
+    "ボビー・エベア",
+    "エベア"
+  ],
+  "NO|Jim Everett": [
+    "ジムエバレット",
+    "ジム・エバレット",
+    "エバレット"
+  ],
+  "NO|Billy Kilmer": [
+    "ビリーキルマー",
+    "ビリー・キルマー",
+    "キルマー"
+  ],
+  "NO|Gary Cuozzo": [
+    "ゲイリークオッゾ",
+    "ゲイリー・クオッゾ",
+    "クオッゾ"
+  ],
+  "NO|Ken Stabler": [
+    "ケンステイブラー",
+    "ケン・ステイブラー",
+    "ステイブラー"
+  ],
+  "TB|Tom Brady": [
+    "トムブレイディ",
+    "トム・ブレイディ",
+    "ブレイディ"
+  ],
+  "TB|Jameis Winston": [
+    "ジェイミスウィンストン",
+    "ジェイミス・ウィンストン",
+    "ウィンストン"
+  ],
+  "TB|Trent Dilfer": [
+    "トレントディルファー",
+    "トレント・ディルファー",
+    "ディルファー"
+  ],
+  "TB|Baker Mayfield": [
+    "ベイカーメイフィールド",
+    "ベイカー・メイフィールド",
+    "メイフィールド"
+  ],
+  "TB|Vinny Testaverde": [
+    "ビニーテスタバーディ",
+    "ビニー・テスタバーディ",
+    "テスタバーディ"
+  ],
+  "TB|Josh Freeman": [
+    "ジョシュフリーマン",
+    "ジョシュ・フリーマン",
+    "フリーマン"
+  ],
+  "TB|Doug Williams": [
+    "ダグウィリアムズ",
+    "ダグ・ウィリアムズ",
+    "ウィリアムズ"
+  ],
+  "TB|Brad Johnson": [
+    "ブラッドジョンソン",
+    "ブラッド・ジョンソン"
+  ],
+  "ARI|Jim Hart": [
+    "ジムハート",
+    "ジム・ハート",
+    "ハート"
+  ],
+  "ARI|Neil Lomax": [
+    "ニールロマックス",
+    "ニール・ロマックス",
+    "ロマックス"
+  ],
+  "ARI|Kyler Murray": [
+    "カイラーマレー",
+    "カイラー・マレー",
+    "マレー"
+  ],
+  "ARI|Jake Plummer": [
+    "ジェイクプラマー",
+    "ジェイク・プラマー",
+    "プラマー"
+  ],
+  "ARI|Charley Johnson": [
+    "チャーリージョンソン",
+    "チャーリー・ジョンソン"
+  ],
+  "ARI|Carson Palmer": [
+    "カーソンパーマー",
+    "カーソン・パーマー",
+    "パーマー"
+  ],
+  "ARI|Kurt Warner": [
+    "カートワーナー",
+    "カート・ワーナー",
+    "ワーナー"
+  ],
+  "ARI|Lamar McHan": [
+    "ラマーマクハン",
+    "ラマー・マクハン",
+    "マクハン"
+  ],
+  "LAR|Roman Gabriel": [
+    "ローマンゲイブリエル",
+    "ローマン・ゲイブリエル",
+    "ゲイブリエル"
+  ],
+  "LAR|Matthew Stafford": [
+    "マシュースタッフォード",
+    "マシュー・スタッフォード",
+    "スタッフォード"
+  ],
+  "LAR|Jim Everett": [
+    "ジムエバレット",
+    "ジム・エバレット",
+    "エバレット"
+  ],
+  "LAR|Marc Bulger": [
+    "マークバルジャー",
+    "マーク・バルジャー",
+    "バルジャー"
+  ],
+  "LAR|Norm Van Brocklin": [
+    "ノーム・バンブロックリン",
+    "ノーム・バン・ブロックリン",
+    "ブロックリン"
+  ],
+  "LAR|Kurt Warner": [
+    "カートワーナー",
+    "カート・ワーナー",
+    "ワーナー"
+  ],
+  "LAR|Jared Goff": [
+    "ジャレッドゴフ",
+    "ジャレッド・ゴフ",
+    "ゴフ"
+  ],
+  "LAR|Sam Bradford": [
+    "サムブラッドフォード",
+    "サム・ブラッドフォード",
+    "ブラッドフォード"
+  ],
+  "LAR|Pat Haden": [
+    "パットヘイデン",
+    "パット・ヘイデン",
+    "ヘイデン"
+  ],
+  "LAR|Vince Ferragamo": [
+    "ビンスフェラガモ",
+    "ビンス・フェラガモ",
+    "フェラガモ"
+  ],
+  "SF|Joe Montana": [
+    "ジョーモンタナ",
+    "ジョー・モンタナ",
+    "モンタナ"
+  ],
+  "SF|Steve Young": [
+    "スティーブヤング",
+    "スティーブ・ヤング"
+  ],
+  "SF|John Brodie": [
+    "ジョンブロディ",
+    "ジョン・ブロディ",
+    "ブロディ"
+  ],
+  "SF|Y.A. Tittle": [
+    "YAティトル",
+    "ワイエーティトル",
+    "ワイエー・ティトル",
+    "ティトル"
+  ],
+  "SF|Brock Purdy": [
+    "ブロックパーディ",
+    "ブロック・パーディ",
+    "パーディ"
+  ],
+  "SF|Jimmy Garoppolo": [
+    "ジミーガロポロ",
+    "ジミー・ガロポロ",
+    "ガロポロ"
+  ],
+  "SF|Alex Smith": [
+    "アレックススミス",
+    "アレックス・スミス"
+  ],
+  "SF|Jeff Garcia": [
+    "ジェフガルシア",
+    "ジェフ・ガルシア",
+    "ガルシア"
+  ],
+  "SF|Colin Kaepernick": [
+    "コリンキャパニック",
+    "コリン・キャパニック",
+    "キャパニック"
+  ],
+  "SF|Blaine Gabbert": [
+    "ブレインギャバート",
+    "ブレイン・ギャバート",
+    "ギャバート"
+  ],
+  "SEA|Russell Wilson": [
+    "ラッセルウィルソン",
+    "ラッセル・ウィルソン"
+  ],
+  "SEA|Matt Hasselbeck": [
+    "マットハッセルベック",
+    "マット・ハッセルベック",
+    "ハッセルベック"
+  ],
+  "SEA|Dave Krieg": [
+    "デイブクリーグ",
+    "デイブ・クリーグ",
+    "クリーグ"
+  ],
+  "SEA|Jim Zorn": [
+    "ジムゾーン",
+    "ジム・ゾーン",
+    "ゾーン"
+  ],
+  "SEA|Geno Smith": [
+    "ジーノスミス",
+    "ジーノ・スミス"
+  ],
+  "SEA|Rick Mirer": [
+    "リックマイラー",
+    "リック・マイラー",
+    "マイラー"
+  ],
+  "SEA|Warren Moon": [
+    "ウォーレンムーン",
+    "ウォーレン・ムーン"
+  ],
+  "SEA|Jon Kitna": [
+    "ジョンキトナ",
+    "ジョン・キトナ",
+    "キトナ"
+  ],
+  "SEA|Sam Darnold": [
+    "サムダーノルド",
+    "サム・ダーノルド",
+    "ダーノルド"
+  ],
+  "SEA|Tarvaris Jackson": [
+    "ターバリスジャクソン",
+    "ターバリス・ジャクソン",
+    "ジャクソン"
+  ]
+};
+
+TEAMS.forEach(team => {
+  team.qbs.forEach(qb => {
+    const key = `${team.ab}|${qb.n}`;
+    if (QB_JA_ALIASES[key]) qb.aliases = QB_JA_ALIASES[key];
+  });
+});
 
 const TEAM_COLORS = {
   BUF: { color:"#00338D", accent:"#C60C30" },
@@ -252,6 +1652,20 @@ function buildIndex(qbs){
   });
   return {entries,surnameMap};
 }
+function normalizeJaName(s){
+  return String(s || "")
+    .trim()
+    .replace(/[ 　・･.\-_'’]/g, "")
+    .replace(/[Ａ-Ｚａ-ｚ０-９]/g, ch =>
+      String.fromCharCode(ch.charCodeAt(0) - 0xFEE0)
+    )
+    .toLowerCase();
+}
+function isJapaneseAliasMatch(input, qb){
+  if (!qb.aliases || !qb.aliases.length) return false;
+  const normalizedInput = normalizeJaName(input);
+  return qb.aliases.some(alias => normalizeJaName(alias) === normalizedInput);
+}
 function matchGuess(raw,idx){
   const input=norm(raw);
   if(!input)return null;
@@ -277,6 +1691,7 @@ function matchGuess(raw,idx){
     if(d<bd){bd=d;bestSn=sn;}
   }
   if(bestSn){const tol=bestSn.length>=6?1:0;if(bd<=tol)return idx.surnameMap[bestSn][0];}
+  for(const x of idx.entries){if(isJapaneseAliasMatch(raw,x.q))return x.q;}
   return null;
 }
 
@@ -332,7 +1747,7 @@ function renderTeamList(hostId){
 }
 function renderHeroCopy(){
   $("heroCopy").textContent=`32チーム・全${TOTAL_QBS}名の歴代先発QBから5人を探せ`;
-  $("startCopy").innerHTML=`NFLの32チーム、全${TOTAL_QBS}名の歴代先発QBデータから挑戦。<br>好きなチームを1つ選び、英語で5人答えましょう。<br>5人すべて正解でゲームクリアです！`;
+  $("startCopy").innerHTML=`NFLの32チーム、全${TOTAL_QBS}名の歴代先発QBデータから挑戦。<br>好きなチームを1つ選び、QB名を5人答えましょう。<br>英語入力が基本ですが、一部の有名QBは日本語名でも回答できます。`;
 }
 function pickRandomTeams(count=4){
   return [...TEAMS].sort(()=>Math.random()-.5).slice(0,count);
