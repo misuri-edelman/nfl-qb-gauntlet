@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>歴代QBガントレット — NFL Starting QB Gauntlet</title>
+<title>NFL歴代QBガントレット — NFL Starting QB Gauntlet</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
@@ -32,7 +32,7 @@
     <div class="brand">
       <div class="mark" aria-hidden="true"></div>
       <div>
-        <h1>歴代QBガントレット</h1>
+        <h1>NFL歴代QBガントレット</h1>
         <div class="kicker">Starting QB Gauntlet</div>
       </div>
     </div>
@@ -123,7 +123,7 @@
       <div class="howto-note">文字の揺れは今の判定のままです。r/l のような発音寄りの置換は、誤判定を避けるため特別扱いしていません。</div>
     </div>
   </div>
-  <div class="foot">歴代QBガントレット ／ Starting QB Gauntlet<br>制作：みすり（@misuri_edelman）</div>
+  <div class="foot">NFL歴代QBガントレット ／ Starting QB Gauntlet<br>制作：みすり（@misuri_edelman）</div>
 </div>
 <script>
 const TEAMS = [
@@ -475,18 +475,18 @@ function endGame(win){
   $("retryBtn").onclick=()=>startTeam(t);
   $("shareXBtn").onclick=()=>{
     const text=win
-      ? `歴代QBガントレット
+      ? `NFL歴代QBガントレット
 
 ${t.ab} / ${t.name} を ${formatElapsed(state.elapsed)} でクリア！
 ${GOAL}人正解しました。
 
-#歴代QBガントレット`
-      : `歴代QBガントレット
+#NFL歴代QBガントレット`
+      : `NFL歴代QBガントレット
 
 ${t.ab} / ${t.name} に挑戦！
 ${state.got.length}/${GOAL}人正解しました。
 
-#歴代QBガントレット`;
+#NFL歴代QBガントレット`;
     const url=`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
     window.open(url,"_blank","noopener");
   };
