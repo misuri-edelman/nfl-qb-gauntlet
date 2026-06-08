@@ -1,0 +1,514 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NFL Starting QB Gauntlet</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Oswald:wght@500;600;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#061a3d;--muted:#64748b;--line:#d9dee8;--soft:#f6f8fb;
+    --card:#fff;--navy:#061a3d;--blue:#0f55b7;--red:#e31837;
+    --green:#0f8f4e;--shadow:0 12px 32px rgba(15,27,52,.10);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{min-height:100%}
+  body{font-family:"Noto Sans JP",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#fff;color:var(--ink);padding:28px 22px 40px;-webkit-font-smoothing:antialiased}
+  button,input,textarea{font:inherit}button{cursor:pointer}.hidden{display:none!important}
+  .wrap{width:min(100%,1320px);margin:0 auto}.top{display:flex;align-items:center;justify-content:space-between;gap:22px;padding:0 0 28px}.brand{display:flex;align-items:center;gap:22px}.mark{width:78px;height:86px;border:4px solid var(--navy);border-radius:18px 18px 28px 28px;display:grid;place-items:center;position:relative;color:var(--navy);box-shadow:inset 0 0 0 5px #fff, inset 0 0 0 8px rgba(6,26,61,.08)}.mark:before{content:"★";position:absolute;top:-17px;background:#fff;padding:0 5px;font-size:18px}.mark:after{content:"QB";font-family:"Oswald",sans-serif;font-weight:700;font-size:24px}.brand h1{font-size:42px;font-weight:900;letter-spacing:0;color:var(--navy);line-height:1.05}.brand .kicker{font-size:18px;color:#74839c;margin-top:8px;letter-spacing:.04em}.reset{border:1px solid #cbd5e1;background:#fff;color:var(--navy);border-radius:8px;height:40px;padding:0 16px;font-weight:800}.reset:hover{background:#f8fafc}.top-actions{display:flex;align-items:center;gap:10px;flex-wrap:wrap;justify-content:flex-end}.lang-switch{display:inline-flex;align-items:center;justify-content:center;border:1px solid #cbd5e1;background:#fff;color:var(--navy);border-radius:8px;height:40px;padding:0 14px;font-weight:800;text-decoration:none}.lang-switch:hover{background:#f8fafc}
+  .app{padding-bottom:26px}.guide{display:grid;grid-template-columns:1.25fr repeat(3,auto);align-items:center;gap:24px;border:1px solid var(--line);border-radius:8px;min-height:74px;padding:16px 28px;margin-bottom:26px;background:linear-gradient(90deg,rgba(6,26,61,.025),rgba(15,85,183,.035)),#fff}.guide-main{display:flex;align-items:center;gap:18px;font-size:22px;font-weight:900}.guide-icon{font-size:31px;color:#0f55b7}.guide-chip{display:flex;align-items:center;gap:10px;padding-left:26px;border-left:1px solid #e3e8f0;font-weight:800;color:#263954;white-space:nowrap}.guide-chip:before{content:"✓";width:22px;height:22px;border:2px solid var(--navy);border-radius:50%;display:grid;place-items:center;font-size:13px;color:var(--navy)}
+  .home-screen{max-width:960px;margin:0 auto}.start-card{position:relative;overflow:hidden;background:radial-gradient(circle at 10% 10%,rgba(227,24,55,.075),transparent 30%),radial-gradient(circle at 90% 12%,rgba(0,51,141,.075),transparent 32%),linear-gradient(180deg,#ffffff 0%,#f8fbff 100%);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow);padding:42px 54px;text-align:center}.start-card:before{content:"";position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0,transparent 74px,rgba(6,26,61,.028) 74px,rgba(6,26,61,.028) 75px);pointer-events:none}.start-card>*{position:relative;z-index:1}.start-card-accent{position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,#00338D,#E31837,#203731,#AA0000,#008E97,#4F2683);z-index:2}.start-card h2{font-size:34px;color:var(--navy);margin-bottom:14px}.start-card p{color:#334766;line-height:1.8;font-size:17px}.start-team-btn{width:min(100%,520px);height:62px;margin:28px auto 0;font-size:22px;background:linear-gradient(135deg,#061a3d 0%,#0f3b78 100%);box-shadow:0 12px 26px rgba(6,26,61,.22);transition:transform .15s ease,box-shadow .15s ease,filter .15s ease}.start-team-btn:hover{transform:translateY(-1px);box-shadow:0 16px 32px rgba(6,26,61,.26)}.or{display:flex;align-items:center;gap:18px;color:#6f7b91;margin:24px auto 14px;width:min(100%,520px)}.or:before,.or:after{content:"";height:1px;background:#e0e6ef;flex:1}.start-actions{display:grid;grid-template-columns:1fr 1fr;gap:18px;width:min(100%,560px);margin:0 auto}.sample-teams{border-top:1px solid #e5e9f0;margin-top:28px;padding-top:18px}.sample-title{font-weight:800;color:#334766;margin-bottom:14px}.sample-team-row{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}.sample-team{position:relative;height:82px;border:1px solid #dbe3ef;border-radius:10px;background:rgba(255,255,255,.92);box-shadow:0 5px 14px rgba(15,27,52,.08);color:var(--navy);font-weight:900;transition:transform .15s ease,border-color .15s ease,box-shadow .15s ease;overflow:hidden}.sample-team:before{content:"";position:absolute;left:10px;right:10px;top:9px;height:5px;border-radius:999px;background:var(--tc,#64748b)}.sample-team strong{display:block;margin-top:16px;font-size:26px;letter-spacing:.02em;color:var(--navy)}.sample-team span{display:block;margin-top:2px;font-size:13px;color:#64748b;font-weight:600}.sample-team:hover{transform:translateY(-2px);border-color:var(--tc,#94a3b8);box-shadow:0 9px 20px rgba(15,27,52,.12)}.feature-strip{margin-top:28px;border:1px solid var(--line);border-radius:10px;box-shadow:0 6px 18px rgba(15,27,52,.06);padding:22px 28px;display:grid;grid-template-columns:repeat(3,1fr);gap:22px}.feature{display:grid;grid-template-columns:42px 1fr;gap:14px;align-items:center;border-right:1px solid #e1e6ee}.feature:last-child{border-right:0}.feature b{display:block;font-size:17px}.feature span{display:block;color:#64748b;line-height:1.5;margin-top:4px}.feature .ico{font-size:30px;color:#14549a;text-align:center}
+  .play-screen{max-width:1180px;margin:0 auto}.panel{background:#fff;border:1px solid var(--line);border-radius:10px;box-shadow:var(--shadow);overflow:hidden}.play-head{display:grid;grid-template-columns:1fr auto;align-items:center;gap:20px;padding:30px 34px;border-bottom:1px solid var(--line)}.team-title{display:flex;align-items:center;gap:24px;min-width:0}.team-logo{width:104px;height:66px;border:3px solid var(--tc,#e31837);border-radius:18px;background:#fff;display:grid;place-items:center;font-family:"Anton",Impact,sans-serif;font-size:34px;color:var(--tc,#e31837)}.play-head .meta{display:flex;align-items:center;gap:18px;min-width:0}.play-head .eng{font-weight:900;font-size:36px;color:var(--navy);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.change-team{height:38px;border:1px solid #cbd6e6;background:#fff;border-radius:7px;color:#1354a2;padding:0 14px;font-weight:800}.change-team:hover{background:#f8fbff}.score{display:grid;grid-template-columns:auto auto;gap:26px;align-items:end;text-align:right;color:var(--navy);font-weight:900}.score-block{display:grid;gap:4px}.score .label,.elapsed .label{display:block;font-size:14px;margin-bottom:0;color:#394b66}.score .num{font-family:"Oswald",sans-serif;font-size:42px;line-height:1}.score small{font-size:22px}.elapsed{text-align:left;color:#64748b}.elapsed .time{font-family:"Oswald",sans-serif;font-size:28px;line-height:1;color:#334766;font-weight:700}.progress-row{display:grid;grid-template-columns:110px 1fr;align-items:center;border-bottom:1px solid var(--line);background:#fbfcfe}.progress-label{font-size:22px;font-weight:900;padding-left:34px}.pips{display:flex;gap:28px;padding:20px 30px}.pip{height:54px;flex:1;max-width:170px;border:1px solid #d4dce8;border-radius:7px;background:#fff;display:grid;place-items:center;color:transparent}.pip.on{background:linear-gradient(180deg,#f01d3d,#d7192f);border-color:#d7192f;color:#fff;font-size:30px;font-weight:900;box-shadow:0 5px 12px rgba(227,24,55,.24)}.answer-area{padding:24px 34px 32px}.input-label{font-size:22px;font-weight:900;margin-bottom:12px}.form{display:grid;grid-template-columns:1fr 290px;gap:26px}.form input{height:68px;border:1px solid #c8d0dd;border-radius:7px;padding:0 18px;font-size:20px;color:var(--ink);outline:none}.form input::placeholder{color:#a7b0c0}.form input:focus{border-color:#5d82bd;box-shadow:0 0 0 3px rgba(31,95,191,.12)}.form button{height:68px;border:0;border-radius:7px;background:var(--navy);color:#fff;font-size:24px;font-weight:900}.form.shake{animation:shake .35s}@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}50%{transform:translateX(6px)}75%{transform:translateX(-4px)}}.hint-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 18px}.hint{color:#52647f;font-size:15px}.rule-link{border:0;background:transparent;color:#14549a;text-decoration:underline;font-weight:800}.feedback{min-height:22px;font-weight:800;margin-bottom:12px}.feedback.ok{color:var(--green)}.feedback.no{color:#c91f2f}.feedback.dup{color:#b7791f}.got-title{font-size:22px;font-weight:900;margin-bottom:10px}.got{border:1px solid #d8dee8;border-radius:7px;overflow:hidden;background:#fff}.got:empty{border-style:dashed;min-height:54px}.got .row{display:grid;grid-template-columns:74px 1fr 200px 42px;align-items:center;min-height:58px;border-bottom:1px solid #e4e8ef}.got .row:last-child{border-bottom:0}.got .num{text-align:center;font-weight:900}.got .nm{font-size:18px;font-weight:900}.got .yr{font-size:15px;color:#526078;text-align:right}.got .row:after{content:"⌄";text-align:center}.giveup{width:100%;height:58px;margin-top:26px;border:1px solid #8dafdf;background:#fff;border-radius:7px;color:#14549a;font-size:21px;font-weight:900}.giveup:hover{background:#f7fbff}
+  .result{padding:38px;text-align:center}.result .tag{font-family:"Oswald",sans-serif;letter-spacing:.12em;color:#71809b;text-transform:uppercase;margin-bottom:10px}.result .big{font-family:"Anton",Impact,sans-serif;font-size:76px;color:var(--navy);line-height:1}.result.win .big{color:#0f8f4e}.result.lose .big{color:#c91f2f}.result p{color:#526078;margin:12px 0 24px}.reveal{text-align:left;border:1px solid var(--line);border-radius:8px;padding:20px;background:#fbfcfe;margin-bottom:22px}.reveal h4{font-size:17px;margin-bottom:16px;color:var(--navy)}.reveal .list{display:flex;flex-wrap:wrap;gap:10px}.reveal .pill{font-size:14px;border:1px solid #d9dee8;border-radius:999px;padding:7px 12px;background:#fff;color:#64748b;line-height:1.35}.reveal .pill .pn{color:#1f2d44;font-weight:800}.reveal .pill.hit{border-color:#8fd3ad;background:#effaf3}.share-row{display:flex;justify-content:center;margin:4px 0 18px}.btn.x-share{min-width:280px;height:58px;background:#111827;border-color:#111827;color:#fff;font-size:18px;box-shadow:0 10px 22px rgba(17,24,39,.16)}.btn.x-share:hover{transform:translateY(-1px);box-shadow:0 13px 26px rgba(17,24,39,.20)}.actions{display:flex;justify-content:center;gap:12px;flex-wrap:wrap}.btn{height:50px;border-radius:7px;border:1px solid #9db5dc;padding:0 24px;font-weight:900;background:#fff;color:#14549a}.btn.primary{background:var(--navy);border-color:var(--navy);color:#fff}.btn:hover{filter:brightness(1.05)}.foot{text-align:center;color:#9aa4b5;font-size:12px;line-height:1.8;padding:22px 0 0}.foot a{color:#64748b;text-decoration:none;font-weight:700}.foot a:hover{text-decoration:underline;color:#14549a}
+  .team-modal,.howto-modal{position:fixed;inset:0;z-index:1000}.team-modal-backdrop,.howto-backdrop{position:absolute;inset:0;background:rgba(8,18,34,.56);backdrop-filter:blur(2px)}.team-modal-dialog,.howto-dialog{position:relative;width:min(92vw,760px);max-height:86vh;overflow:auto;margin:7vh auto 0;background:#fff;border-radius:16px;box-shadow:0 24px 70px rgba(8,18,34,.28);padding:34px 38px 30px}.team-modal-close,.howto-close{position:absolute;right:22px;top:18px;border:0;background:transparent;font-size:28px;color:var(--navy)}.team-modal-dialog h2,.howto-dialog h2{text-align:center;font-size:30px;margin-bottom:8px}.team-modal-dialog>p,.howto-dialog>p{text-align:center;color:#52647f;margin-bottom:24px}.modal-conf h3{font-family:"Oswald",sans-serif;font-size:12px;letter-spacing:.12em;color:#97a2b4;text-transform:uppercase;margin:18px 0 8px}.grid{display:grid;grid-template-columns:repeat(4,minmax(96px,1fr));gap:16px}.team{position:relative;text-align:center;min-height:112px;background:#fff;border:1px solid #dfe4ec;border-radius:8px;padding:16px 8px 12px;box-shadow:0 4px 12px rgba(15,27,52,.08);transition:.15s;color:var(--ink);overflow:visible}.team:before{content:"";position:absolute;left:8px;right:8px;top:10px;height:6px;border-radius:6px;background:var(--tc,#64748b)}.team:hover{transform:translateY(-2px)}.team.active{border-color:var(--tc,#d92534);box-shadow:0 0 0 1px var(--tc,#d92534),0 7px 18px rgba(15,27,52,.12)}.team.active:after{content:"✓";position:absolute;right:-8px;top:-8px;width:24px;height:24px;border-radius:50%;background:var(--tc,#d92534);color:#fff;display:grid;place-items:center;font-weight:900}.team .ab{font-family:"Anton",Impact,sans-serif;font-size:32px;margin-top:24px;color:#1b2437}.team .jp{font-size:13px;color:#69758a;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.modal-cancel{display:block;margin:26px auto 0;min-width:180px}.howto-list{display:grid;gap:12px;text-align:left;color:#263954;line-height:1.7}.howto-list li{margin-left:1.2em}.howto-note{margin-top:18px;background:#f7fbff;border:1px solid #dbe8fb;border-radius:8px;padding:12px 14px;text-align:left;color:#334766;line-height:1.7}
+  @media(max-width:900px){body{padding:18px 14px}.top{align-items:flex-start}.brand h1{font-size:30px}.mark{width:60px;height:68px}.guide{grid-template-columns:1fr}.guide-chip{border-left:0;border-top:1px solid #e3e8f0;padding:14px 0 0}.start-card{padding:32px 20px}.feature-strip{grid-template-columns:1fr}.feature{border-right:0;border-bottom:1px solid #e1e6ee;padding-bottom:14px}.feature:last-child{border-bottom:0}.play-head{grid-template-columns:1fr}.play-head .eng{font-size:28px}.score{justify-content:start;text-align:left}.progress-row{grid-template-columns:1fr}.progress-label{padding:18px 24px 0}.pips{gap:10px;padding:14px 24px}.form{grid-template-columns:1fr}.got .row{grid-template-columns:48px 1fr;gap:6px;padding-right:10px}.got .yr{grid-column:2;text-align:left;padding-bottom:8px}.got .row:after{display:none}.grid{grid-template-columns:repeat(2,1fr)}.sample-team-row,.start-actions{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header class="top">
+    <div class="brand">
+      <div class="mark" aria-hidden="true"></div>
+      <div>
+        <h1>NFL Starting QB Gauntlet</h1>
+        <div class="kicker">Starting QB Gauntlet</div>
+      </div>
+    </div>
+    <div class="top-actions"><button class="reset" id="homeBtn">Home</button><a class="lang-switch" href="index.html" lang="ja" hreflang="ja">日本語</a></div>
+  </header>
+
+  <main class="app" id="appScreen">
+    <section class="guide">
+      <div class="guide-main"><span class="guide-icon">♢</span><span id="heroCopy">Name 5 starting QBs from NFL history</span></div>
+      <div class="guide-chip">Last names count when unique</div>
+      <div class="guide-chip">Correct answers are added</div>
+      <div class="guide-chip">Get 5 to clear</div>
+    </section>
+
+    <section class="home-screen" id="homeScreen">
+      <div class="start-card">
+                <div class="start-card-accent" aria-hidden="true"></div>
+        <h2>Can you name 5 starting QBs from your team?</h2>
+        <p id="startCopy">Choose any of the 32 NFL teams.<br>Name 5 starting QBs from that team in English.<br>Get all 5 right to clear the gauntlet.</p>
+        <button class="btn primary start-team-btn" id="openTeamSelectBtn" type="button">◇ Choose a Team</button>
+        <div class="or">or</div>
+        <div class="start-actions">
+          <button class="btn ghost" id="randomBtn" type="button">▧ Start Randomly</button>
+          <button class="btn ghost" id="howToBtn" type="button">□ How to Play</button>
+        </div>
+        <div class="sample-teams">
+          <div class="sample-title">Random Picks</div>
+          <div class="sample-team-row" id="sampleTeams"></div>
+        </div>
+      </div>
+      <div class="feature-strip">
+        <div class="feature"><div class="ico">◎</div><div><b>All 32 Teams</b><span>Choose from every NFL team.</span></div></div>
+        <div class="feature"><div class="ico">▣</div><div><b>Historical QB Data</b><span>Explore a broad list of starting QBs for each team.</span></div></div>
+        <div class="feature"><div class="ico">♕</div><div><b>Clear with 5</b><span>Get five correct answers to win.</span></div></div>
+      </div>
+    </section>
+
+    <section class="play-screen hidden" id="playScreen">
+      <section class="panel play-panel" id="playPanel">
+        <div class="play-head" id="playHead"></div>
+        <div class="body">
+          <div class="progress-row">
+            <div class="progress-label">Progress</div>
+            <div class="pips" id="pips"></div>
+          </div>
+          <div class="answer-area">
+            <div class="input-label">Enter a QB Name</div>
+            <div class="form" id="form">
+              <input id="guess" type="text" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Example: Joe Montana">
+              <button id="submit">Submit</button>
+            </div>
+            <div class="hint-row"><div class="hint">Use a full name, or a last name if it uniquely identifies one QB on this team.</div><button class="rule-link" id="ruleHelpBtn" type="button">Scoring Rules</button></div>
+            <div class="feedback" id="feedback"></div>
+            <div class="got-title">Correct QBs</div>
+            <div class="got" id="got"></div>
+            <button class="giveup" id="giveupBtn">Give Up and Reveal Answers</button>
+          </div>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <section class="screen hidden" id="resultScreen"></section>
+  <div class="team-modal hidden" id="teamModal" aria-hidden="true">
+    <div class="team-modal-backdrop" id="teamModalBackdrop"></div>
+    <div class="team-modal-dialog" role="dialog" aria-modal="true" aria-labelledby="teamModalTitle">
+      <button class="team-modal-close" id="teamModalClose" type="button">×</button>
+      <h2 id="teamModalTitle">Choose a Team</h2>
+      <p>Select the team you want to play.</p>
+      <div class="conf modal-conf" id="modalConfList"></div>
+      <button class="btn ghost modal-cancel" id="teamModalCancel" type="button">Cancel</button>
+    </div>
+  </div>
+  <div class="howto-modal hidden" id="howToModal" aria-hidden="true">
+    <div class="howto-backdrop" id="howToBackdrop"></div>
+    <div class="howto-dialog" role="dialog" aria-modal="true" aria-labelledby="howToTitle">
+      <button class="howto-close" id="howToClose" type="button">×</button>
+      <h2 id="howToTitle">How to Play</h2>
+      <p>Choose a team and name five starting quarterbacks from its history.</p>
+      <ul class="howto-list">
+        <li>Enter QB names in English.</li>
+        <li>You can answer with a full name, or with a last name if it is unique for that team.</li>
+        <li>Capitalization, periods, commas, apostrophes, and hyphens are ignored.</li>
+        <li>Minor typos are tolerated in some cases, but short names are judged more strictly.</li>
+        <li>If multiple QBs share the same last name, use the full name.</li>
+        <li>First names alone do not count.</li>
+      </ul>
+      <div class="howto-note">The game accepts small spelling variations, but it does not treat pronunciation-based swaps such as r/l as special cases in order to avoid false positives.</div>
+    </div>
+  </div>
+  <div class="foot">NFL Starting QB Gauntlet<br>Created by <a href="https://x.com/misuri_edelman" target="_blank" rel="noopener noreferrer">Misuri (@misuri_edelman)</a></div>
+</div>
+<script>
+const TEAMS = [
+{ab:"BUF",name:"Buffalo Bills",jp:"\u30d0\u30c3\u30d5\u30a1\u30ed\u30fc\u30fb\u30d3\u30eb\u30ba",conf:"AFC East",color:"#00338d",qbs:[{n:"Josh Allen",y:"2018\u2013present"},{n:"Jim Kelly",y:"1986\u20131996"},{n:"Joe Ferguson",y:"1973\u20131984"},{n:"Jack Kemp",y:"1962\u20131969"},{n:"Daryle Lamonica",y:"1963\u20131967"},{n:"Tyrod Taylor",y:"2015\u20132017"},{n:"Drew Bledsoe",y:"2002\u20132004"},{n:"Ryan Fitzpatrick",y:"2009\u20132012"},{n:"Doug Flutie",y:"1998\u20132000"},{n:"Rob Johnson",y:"1998\u20132001"},{n:"Trent Edwards",y:"2007\u20132010"},{n:"J.P. Losman",y:"2005\u20132008"},{n:"EJ Manuel",y:"2013\u20132016"},{n:"Frank Reich",y:"1989\u201391, 1994"},{n:"Todd Collins",y:"1995\u20131997"},{n:"Alex Van Pelt",y:"1997, 2001"},{n:"Dennis Shaw",y:"1970\u20131972"},{n:"Joe Dufek",y:"1984"},{n:"Vince Ferragamo",y:"1985"},{n:"Bruce Mathison",y:"1985"},{n:"Kelly Holcomb",y:"2005"},{n:"Kyle Orton",y:"2014"},{n:"Matt Cassel",y:"2015"},{n:"Nathan Peterman",y:"2017, 2018"},{n:"Derek Anderson",y:"2018"},{n:"Matt Barkley",y:"2018"},{n:"Thad Lewis",y:"2013"},{n:"Jeff Tuel",y:"2013"},{n:"Brian Brohm",y:"2009, 2010"},{n:"Tom Flores",y:"1967, 1968"},{n:"Dan Darragh",y:"1968\u20131970"},{n:"Ed Rutkowski",y:"1968"},{n:"Kay Stephenson",y:"1968"},{n:"James Harris",y:"1969, 1971"},{n:"Leo Hart",y:"1972"},{n:"Gary Marangi",y:"1976"},{n:"Johnny Green",y:"1960, 1961"},{n:"Tommy O'Connell",y:"1960"},{n:"Richie Lucas",y:"1960, 1961"},{n:"Bob Brodhead",y:"1960"},{n:"Warren Rabb",y:"1961, 1962"},{n:"M.C. Reynolds",y:"1961"},{n:"Brian McClure",y:"1987"},{n:"Willie Totten",y:"1987"},{n:"Dan Manucci",y:"1987"}]},
+{ab:"MIA",name:"Miami Dolphins",jp:"\u30de\u30a4\u30a2\u30df\u30fb\u30c9\u30eb\u30d5\u30a3\u30f3\u30ba",conf:"AFC East",color:"#008e97",qbs:[{n:"Dan Marino",y:"1983\u20131999"},{n:"Bob Griese",y:"1967\u20131980"},{n:"Tua Tagovailoa",y:"2020\u2013present"},{n:"Jay Fiedler",y:"2000\u20132004"},{n:"Ryan Tannehill",y:"2012, 2016, 2018"},{n:"David Woodley",y:"1980\u20131983"},{n:"Don Strock",y:"1975\u20131981"},{n:"Chad Pennington",y:"2008\u20132010"},{n:"Chad Henne",y:"2009\u20132011"},{n:"Earl Morrall",y:"1972, 1973, 1975"},{n:"Matt Moore",y:"2011, 2016, 2017"},{n:"Ryan Fitzpatrick",y:"2019, 2020"},{n:"Jay Cutler",y:"2017"},{n:"Daunte Culpepper",y:"2006"},{n:"Joey Harrington",y:"2006"},{n:"Trent Green",y:"2007"},{n:"Cleo Lemon",y:"2006, 2007"},{n:"John Beck",y:"2007"},{n:"Gus Frerotte",y:"2005"},{n:"Sage Rosenfels",y:"2004, 2005"},{n:"A.J. Feeley",y:"2004"},{n:"Brian Griese",y:"2003"},{n:"Ray Lucas",y:"2002"},{n:"Damon Huard",y:"1999, 2000"},{n:"Scott Mitchell",y:"1993"},{n:"Steve DeBerg",y:"1993"},{n:"Bernie Kosar",y:"1995"},{n:"Craig Erickson",y:"1996"},{n:"Kyle Mackey",y:"1987"},{n:"Dick Wood",y:"1966"},{n:"Rick Norton",y:"1966\u20131969"},{n:"George Wilson",y:"1966"},{n:"John Stofa",y:"1966, 1967"},{n:"George Mira",y:"1971"},{n:"Brock Osweiler",y:"2018"},{n:"Josh Rosen",y:"2019"},{n:"Jacoby Brissett",y:"2021"},{n:"Teddy Bridgewater",y:"2022"},{n:"Skylar Thompson",y:"2022, 2024"},{n:"Tyler Huntley",y:"2024"},{n:"Quinn Ewers",y:"2025"}]},
+{ab:"NE",name:"New England Patriots",jp:"\u30cb\u30e5\u30fc\u30a4\u30f3\u30b0\u30e9\u30f3\u30c9\u30fb\u30da\u30a4\u30c8\u30ea\u30aa\u30c3\u30c4",conf:"AFC East",color:"#c60c30",qbs:[{n:"Tom Brady",y:"2001\u20132017"},{n:"Drew Bledsoe",y:"1993\u20132001"},{n:"Steve Grogan",y:"1975\u20131990"},{n:"Babe Parilli",y:"1961\u20131967"},{n:"Tony Eason",y:"1983\u20131989"},{n:"Jim Plunkett",y:"1971\u20131975"},{n:"Mac Jones",y:"2021\u20132023"},{n:"Drake Maye",y:"2024\u2013present"},{n:"Matt Cavanaugh",y:"1980\u20131982"},{n:"Doug Flutie",y:"1987\u20131989"},{n:"Hugh Millen",y:"1991, 1992"},{n:"Tommy Hodson",y:"1990\u20131992"},{n:"Marc Wilson",y:"1989, 1990"},{n:"Scott Zolak",y:"1992, 1995, 1998"},{n:"Cam Newton",y:"2020"},{n:"Bailey Zappe",y:"2022, 2023"},{n:"Matt Cassel",y:"2008"},{n:"Jacoby Brissett",y:"2016, 2024"},{n:"Jimmy Garoppolo",y:"2016"},{n:"Brian Hoyer",y:"2020, 2022"},{n:"Tom Ramsey",y:"1987, 1988"},{n:"Mike Taliaferro",y:"1968\u20131970"},{n:"Tom Sherman",y:"1968"},{n:"Joe Kapp",y:"1970"},{n:"Neil Graff",y:"1975"},{n:"Tom Owen",y:"1981"},{n:"Bob Bleier",y:"1987"},{n:"Jeff Carlson",y:"1992"},{n:"Scott Secules",y:"1993"},{n:"Butch Songin",y:"1960, 1961"},{n:"Tom Greene",y:"1960"},{n:"Tom Yewcic",y:"1962"},{n:"Eddie Wilson",y:"1965"},{n:"Don Trull",y:"1967"}]},
+{ab:"NYJ",name:"New York Jets",jp:"\u30cb\u30e5\u30fc\u30e8\u30fc\u30af\u30fb\u30b8\u30a7\u30c3\u30c4",conf:"AFC East",color:"#125740",qbs:[{n:"Joe Namath",y:"1965\u20131976"},{n:"Ken O'Brien",y:"1984\u20131992"},{n:"Richard Todd",y:"1976\u20131983"},{n:"Chad Pennington",y:"2002\u20132007"},{n:"Vinny Testaverde",y:"1998\u20132005"},{n:"Mark Sanchez",y:"2009\u20132012"},{n:"Sam Darnold",y:"2018\u20132020"},{n:"Zach Wilson",y:"2021\u20132023"},{n:"Geno Smith",y:"2013, 2014, 2016"},{n:"Ryan Fitzpatrick",y:"2015, 2016"},{n:"Boomer Esiason",y:"1993\u20131995"},{n:"Aaron Rodgers",y:"2023, 2024"},{n:"Al Dorow",y:"1960, 1961"},{n:"Dick Wood",y:"1963, 1964"},{n:"Al Woodall",y:"1970\u20131973"},{n:"Pat Ryan",y:"1984\u20131989"},{n:"Neil O'Donnell",y:"1996, 1997"},{n:"Glenn Foley",y:"1996\u20131998"},{n:"Brett Favre",y:"2008"},{n:"Michael Vick",y:"2014"},{n:"Josh McCown",y:"2017, 2018"},{n:"Joe Flacco",y:"2020\u20132022"},{n:"Mike White",y:"2021, 2022"},{n:"Justin Fields",y:"2025"},{n:"Tyrod Taylor",y:"2025"},{n:"Brady Cook",y:"2025"},{n:"Kellen Clemens",y:"2007, 2009"},{n:"Bryce Petty",y:"2016, 2017"},{n:"Trevor Siemian",y:"2019, 2023"},{n:"Tim Boyle",y:"2023"},{n:"Browning Nagle",y:"1992"},{n:"Ray Lucas",y:"1999"},{n:"Rick Mirer",y:"1999"},{n:"Quincy Carter",y:"2004"},{n:"Brooks Bollinger",y:"2005"},{n:"Greg McElroy",y:"2012"},{n:"Luke Falk",y:"2019"},{n:"Mike Taliaferro",y:"1965, 1966"},{n:"Johnny Green",y:"1962"},{n:"Lee Grosscup",y:"1962"},{n:"Butch Songin",y:"1962"},{n:"Galen Hall",y:"1963"},{n:"Pete Liske",y:"1964"},{n:"Bob Davis",y:"1971, 1972"},{n:"Bill Demory",y:"1973"},{n:"J.J. Jones",y:"1975"},{n:"Matt Robinson",y:"1977\u20131979"},{n:"Marty Domres",y:"1977"},{n:"David Norrie",y:"1987"},{n:"Tony Eason",y:"1989"},{n:"Kyle Mackey",y:"1989"},{n:"Jack Trudeau",y:"1994"},{n:"Bubby Brister",y:"1995"},{n:"Frank Reich",y:"1996"},{n:"Dick Jamieson",y:"1960"}]},
+{ab:"BAL",name:"Baltimore Ravens",jp:"\u30dc\u30eb\u30c1\u30e2\u30a2\u30fb\u30ec\u30a4\u30d6\u30f3\u30ba",conf:"AFC North",color:"#241773",qbs:[{n:"Lamar Jackson",y:"2018\u2013present"},{n:"Joe Flacco",y:"2008\u20132018"},{n:"Kyle Boller",y:"2003\u20132005, 2007"},{n:"Vinny Testaverde",y:"1996, 1997"},{n:"Tony Banks",y:"1999, 2000"},{n:"Steve McNair",y:"2006, 2007"},{n:"Tyler Huntley",y:"2021\u20132023, 2025"},{n:"Trent Dilfer",y:"2000"},{n:"Elvis Grbac",y:"2001"},{n:"Eric Zeier",y:"1997, 1998"},{n:"Jim Harbaugh",y:"1998"},{n:"Jeff Blake",y:"2002"},{n:"Chris Redman",y:"2002"},{n:"Anthony Wright",y:"2003, 2005"},{n:"Robert Griffin III",y:"2019, 2020"},{n:"Troy Smith",y:"2007"},{n:"Stoney Case",y:"1999"},{n:"Scott Mitchell",y:"1999"},{n:"Randall Cunningham",y:"2001"},{n:"Josh Johnson",y:"2021"},{n:"Anthony Brown",y:"2022"},{n:"Matt Schaub",y:"2015"},{n:"Jimmy Clausen",y:"2015"},{n:"Ryan Mallett",y:"2015"},{n:"Cooper Rush",y:"2025"}]},
+{ab:"CIN",name:"Cincinnati Bengals",jp:"\u30b7\u30f3\u30b7\u30ca\u30c6\u30a3\u30fb\u30d9\u30f3\u30ac\u30eb\u30ba",conf:"AFC North",color:"#fb4f14",qbs:[{n:"Ken Anderson",y:"1971\u20131985"},{n:"Andy Dalton",y:"2011\u20132019"},{n:"Boomer Esiason",y:"1984\u20131992, 1997"},{n:"Carson Palmer",y:"2004\u20132010"},{n:"Joe Burrow",y:"2020\u2013present"},{n:"Jeff Blake",y:"1994\u20131999"},{n:"Jon Kitna",y:"2001\u20132004"},{n:"Virgil Carter",y:"1970\u20131972"},{n:"Sam Wyche",y:"1968\u20131970"},{n:"David Klingler",y:"1992\u20131994"},{n:"Akili Smith",y:"1999\u20132002"},{n:"Jake Browning",y:"2023, 2025"},{n:"Brandon Allen",y:"2020, 2021"},{n:"Ryan Fitzpatrick",y:"2008"},{n:"A.J. McCarron",y:"2015"},{n:"Ryan Finley",y:"2019, 2020"},{n:"Jeff Driskel",y:"2018"},{n:"Joe Flacco",y:"2025"},{n:"John Stofa",y:"1968"},{n:"Dewey Warren",y:"1968"},{n:"Greg Cook",y:"1969"},{n:"Wayne Clark",y:"1974"},{n:"John Reaves",y:"1975, 1977, 1978"},{n:"Jack Thompson",y:"1979, 1980"},{n:"Turk Schonert",y:"1983, 1984, 1989"},{n:"Dave Walter",y:"1987"},{n:"Adrian Breen",y:"1987"},{n:"Donald Hollas",y:"1991, 1992"},{n:"Erik Wilhelm",y:"1991"},{n:"Jay Schroeder",y:"1993"},{n:"Neil O'Donnell",y:"1998"},{n:"Paul Justin",y:"1998"},{n:"Scott Mitchell",y:"2000"},{n:"Gus Frerotte",y:"2002"}]},
+{ab:"CLE",name:"Cleveland Browns",jp:"\u30af\u30ea\u30fc\u30d6\u30e9\u30f3\u30c9\u30fb\u30d6\u30e9\u30a6\u30f3\u30ba",conf:"AFC North",color:"#ff3c00",qbs:[{n:"Otto Graham",y:"1950\u20131955"},{n:"Brian Sipe",y:"1974\u20131983"},{n:"Bernie Kosar",y:"1985\u20131993"},{n:"Frank Ryan",y:"1962\u20131968"},{n:"Tim Couch",y:"1999\u20132003"},{n:"Baker Mayfield",y:"2018\u20132020"},{n:"Milt Plum",y:"1957\u20131961"},{n:"Bill Nelsen",y:"1968\u20131972"},{n:"Mike Phipps",y:"1970\u20131976"},{n:"Derek Anderson",y:"2006\u20132009"},{n:"Colt McCoy",y:"2010, 2011"},{n:"Brandon Weeden",y:"2012"},{n:"Brian Hoyer",y:"2013, 2014"},{n:"Deshaun Watson",y:"2022\u20132024"},{n:"Jacoby Brissett",y:"2022"},{n:"Joe Flacco",y:"2023, 2025"},{n:"Brady Quinn",y:"2008, 2009"},{n:"Charlie Frye",y:"2005\u20132007"},{n:"Johnny Manziel",y:"2014, 2015"},{n:"Trent Dilfer",y:"2005"},{n:"Jeff Garcia",y:"2004"},{n:"Kelly Holcomb",y:"2000, 2002, 2003, 2004"},{n:"Vinny Testaverde",y:"1993\u20131995"},{n:"Mike Tomczak",y:"1992"},{n:"Paul McDonald",y:"1982\u20131984"},{n:"Gary Danielson",y:"1985\u20131988"},{n:"George Ratterman",y:"1953, 1956"},{n:"Tommy O'Connell",y:"1956, 1957"},{n:"Babe Parilli",y:"1956"},{n:"Len Dawson",y:"1961"},{n:"Jim Ninowski",y:"1962\u20131965"},{n:"Gary Lane",y:"1967"},{n:"Don Gault",y:"1970"},{n:"Will Cureton",y:"1975"},{n:"Dave Mays",y:"1977"},{n:"Terry Luck",y:"1977"},{n:"Mike Pagel",y:"1988, 1990"},{n:"Don Strock",y:"1988"},{n:"Jeff Christensen",y:"1987"},{n:"Todd Philcox",y:"1992, 1993"},{n:"Mark Rypien",y:"1994"},{n:"Eric Zeier",y:"1995"},{n:"Ty Detmer",y:"1999"},{n:"Doug Pederson",y:"2000"},{n:"Spergon Wynn",y:"2000"},{n:"Luke McCown",y:"2004"},{n:"Ken Dorsey",y:"2008"},{n:"Bruce Gradkowski",y:"2008"},{n:"Jake Delhomme",y:"2010"},{n:"Seneca Wallace",y:"2010, 2011"},{n:"Thad Lewis",y:"2012"},{n:"Jason Campbell",y:"2013"},{n:"Connor Shaw",y:"2014"},{n:"Josh McCown",y:"2015, 2016"},{n:"Austin Davis",y:"2015"},{n:"Cody Kessler",y:"2016"},{n:"Robert Griffin III",y:"2016"},{n:"DeShone Kizer",y:"2017"},{n:"Kevin Hogan",y:"2017"},{n:"Tyrod Taylor",y:"2018"},{n:"Case Keenum",y:"2021"},{n:"Nick Mullens",y:"2021"},{n:"Dorian Thompson-Robinson",y:"2023, 2024"},{n:"P.J. Walker",y:"2023"},{n:"Jameis Winston",y:"2024"},{n:"Bailey Zappe",y:"2024"},{n:"Shedeur Sanders",y:"2025"},{n:"Dillon Gabriel",y:"2025"}]},
+{ab:"PIT",name:"Pittsburgh Steelers",jp:"\u30d4\u30c3\u30c4\u30d0\u30fc\u30b0\u30fb\u30b9\u30c6\u30a3\u30fc\u30e9\u30fc\u30ba",conf:"AFC North",color:"#ffb612",qbs:[{n:"Ben Roethlisberger",y:"2004\u20132021"},{n:"Terry Bradshaw",y:"1970\u20131983"},{n:"Kordell Stewart",y:"1997\u20132002"},{n:"Neil O'Donnell",y:"1991\u20131995"},{n:"Bubby Brister",y:"1986\u20131992"},{n:"Bobby Layne",y:"1958\u20131962"},{n:"Mike Tomczak",y:"1993\u20131996"},{n:"Mark Malone",y:"1981, 1984\u20131987"},{n:"Tommy Maddox",y:"2002\u20132005"},{n:"Charlie Batch",y:"2005, 2006, 2010\u20132012"},{n:"Kenny Pickett",y:"2022, 2023"},{n:"Mason Rudolph",y:"2019\u20132025"},{n:"Mitchell Trubisky",y:"2022, 2023"},{n:"Russell Wilson",y:"2024"},{n:"Justin Fields",y:"2024"},{n:"Aaron Rodgers",y:"2025"},{n:"Jim Finks",y:"1952\u20131954"},{n:"Earl Morrall",y:"1957, 1958"},{n:"Len Dawson",y:"1957"},{n:"Rudy Bukich",y:"1960, 1961"},{n:"Ed Brown",y:"1962\u20131964"},{n:"Bill Nelsen",y:"1964\u20131967"},{n:"Terry Hanratty",y:"1969\u20131974"},{n:"Kent Nix",y:"1967, 1968"},{n:"Dick Shiner",y:"1968, 1969"},{n:"Joe Gilliam",y:"1973, 1974"},{n:"Mike Kruczek",y:"1976"},{n:"Cliff Stoudt",y:"1980, 1983"},{n:"David Woodley",y:"1984, 1985"},{n:"Scott Campbell",y:"1985"},{n:"Steve Bono",y:"1987"},{n:"Todd Blackledge",y:"1988, 1989"},{n:"Jim Miller",y:"1996"},{n:"Kent Graham",y:"2000"},{n:"Dennis Dixon",y:"2009, 2010"},{n:"Byron Leftwich",y:"2012"},{n:"Michael Vick",y:"2015"},{n:"Landry Jones",y:"2015\u20132017"},{n:"Devlin Hodges",y:"2019"},{n:"Joe Geri",y:"1950, 1951"},{n:"Ted Marchibroda",y:"1956"},{n:"Tommy Wade",y:"1965"},{n:"Ron C. Smith",y:"1966"},{n:"George Izo",y:"1966"}]},
+{ab:"HOU",name:"Houston Texans",jp:"\u30d2\u30e5\u30fc\u30b9\u30c8\u30f3\u30fb\u30c6\u30ad\u30b5\u30f3\u30ba",conf:"AFC South",color:"#03202f",qbs:[{n:"C.J. Stroud",y:"2023\u2013present"},{n:"Deshaun Watson",y:"2017\u20132020"},{n:"Matt Schaub",y:"2007\u20132013"},{n:"David Carr",y:"2002\u20132006"},{n:"Davis Mills",y:"2021, 2022, 2025"},{n:"Brock Osweiler",y:"2016"},{n:"Ryan Fitzpatrick",y:"2014"},{n:"Brian Hoyer",y:"2015"},{n:"Tom Savage",y:"2016, 2017"},{n:"Tyrod Taylor",y:"2021"},{n:"Case Keenum",y:"2013, 2014, 2023"},{n:"T.J. Yates",y:"2011, 2015, 2017"},{n:"Sage Rosenfels",y:"2007, 2008"},{n:"A.J. McCarron",y:"2019"},{n:"Ryan Mallett",y:"2014, 2015"},{n:"Brandon Weeden",y:"2015"},{n:"Matt Leinart",y:"2011"},{n:"Tony Banks",y:"2003"},{n:"Dave Ragone",y:"2003"},{n:"Kyle Allen",y:"2022"},{n:"Jeff Driskel",y:"2022"}]},
+{ab:"IND",name:"Indianapolis Colts",jp:"\u30a4\u30f3\u30c7\u30a3\u30a2\u30ca\u30dd\u30ea\u30b9\u30fb\u30b3\u30eb\u30c4",conf:"AFC South",color:"#002c5f",qbs:[{n:"Peyton Manning",y:"1998\u20132010"},{n:"Johnny Unitas",y:"1956\u20131972"},{n:"Andrew Luck",y:"2012\u20132018"},{n:"Bert Jones",y:"1973\u20131981"},{n:"Jim Harbaugh",y:"1994\u20131997"},{n:"Jeff George",y:"1990\u20131993"},{n:"Jack Trudeau",y:"1986\u20131993"},{n:"Mike Pagel",y:"1982\u20131985"},{n:"Earl Morrall",y:"1968\u20131972"},{n:"Jacoby Brissett",y:"2017, 2019"},{n:"Philip Rivers",y:"2020, 2025"},{n:"Carson Wentz",y:"2021"},{n:"Anthony Richardson",y:"2023, 2024"},{n:"Gardner Minshew",y:"2023"},{n:"Daniel Jones",y:"2025"},{n:"Matt Ryan",y:"2022"},{n:"Joe Flacco",y:"2024"},{n:"George Shaw",y:"1955, 1956, 1958"},{n:"Marty Domres",y:"1972\u20131974"},{n:"Greg Landry",y:"1979, 1980"},{n:"Chris Chandler",y:"1988, 1989"},{n:"Gary Hogeboom",y:"1986\u20131988"},{n:"Kerry Collins",y:"2011"},{n:"Curtis Painter",y:"2011"},{n:"Dan Orlovsky",y:"2011"},{n:"Matt Hasselbeck",y:"2015"},{n:"Scott Tolzien",y:"2016, 2017"},{n:"Brian Hoyer",y:"2019"},{n:"Sam Ehlinger",y:"2022"},{n:"Nick Foles",y:"2022"},{n:"Josh Freeman",y:"2015"},{n:"Mark Herrmann",y:"1983, 1984, 1992"},{n:"Art Schlichter",y:"1984, 1985"},{n:"Fred Enke",y:"1953, 1954"},{n:"George Taliaferro",y:"1953"},{n:"Gary Kerkorian",y:"1954"},{n:"Cotton Davidson",y:"1954"},{n:"Gary Cuozzo",y:"1965, 1966"},{n:"Tom Matte",y:"1965"},{n:"Bill Troup",y:"1978"},{n:"Mike Kirkland",y:"1978"},{n:"David Humm",y:"1981"},{n:"Matt Kofler",y:"1985"},{n:"Blair Kiel",y:"1987"},{n:"Tom Ramsey",y:"1989"},{n:"Don Majkowski",y:"1994"},{n:"Browning Nagle",y:"1994"},{n:"Craig Erickson",y:"1995"},{n:"Paul Justin",y:"1995\u20131997"},{n:"Kelly Holcomb",y:"1997"},{n:"Riley Leonard",y:"2025"}]},
+{ab:"JAX",name:"Jacksonville Jaguars",jp:"\u30b8\u30e3\u30af\u30bd\u30f3\u30d3\u30eb\u30fb\u30b8\u30e3\u30ac\u30fc\u30ba",conf:"AFC South",color:"#006778",qbs:[{n:"Mark Brunell",y:"1995\u20132003"},{n:"Trevor Lawrence",y:"2021\u2013present"},{n:"David Garrard",y:"2002\u20132010"},{n:"Blake Bortles",y:"2014\u20132018"},{n:"Byron Leftwich",y:"2003\u20132006"},{n:"Chad Henne",y:"2012\u20132014"},{n:"Blaine Gabbert",y:"2011\u20132013"},{n:"Gardner Minshew",y:"2019, 2020"},{n:"Nick Foles",y:"2019"},{n:"Steve Beuerlein",y:"1995"},{n:"Quinn Gray",y:"2007"},{n:"Luke McCown",y:"2011"},{n:"Cody Kessler",y:"2018"},{n:"Mike Glennon",y:"2020"},{n:"Jake Luton",y:"2020"},{n:"C.J. Beathard",y:"2023"},{n:"Mac Jones",y:"2024"},{n:"Rob Johnson",y:"1997"},{n:"Jay Fiedler",y:"1999"},{n:"Jonathan Quinn",y:"1998, 2001"},{n:"Jamie Martin",y:"1998"},{n:"Steve Matthews",y:"1997"},{n:"Todd Bouman",y:"2010"},{n:"Trent Edwards",y:"2010"}]},
+{ab:"TEN",name:"Tennessee Titans",jp:"\u30c6\u30cd\u30b7\u30fc\u30fb\u30bf\u30a4\u30bf\u30f3\u30ba",conf:"AFC South",color:"#4b92db",qbs:[{n:"Warren Moon",y:"1984\u20131993"},{n:"Steve McNair",y:"1995\u20132005"},{n:"Dan Pastorini",y:"1971\u20131979"},{n:"George Blanda",y:"1960\u20131966"},{n:"Ryan Tannehill",y:"2019\u20132023"},{n:"Marcus Mariota",y:"2015\u20132019"},{n:"Vince Young",y:"2006\u20132010"},{n:"Will Levis",y:"2023, 2024"},{n:"Kerry Collins",y:"2006\u20132010"},{n:"Jake Locker",y:"2012\u20132014"},{n:"Matt Hasselbeck",y:"2011, 2012"},{n:"Ryan Fitzpatrick",y:"2013"},{n:"Cam Ward",y:"2025"},{n:"Mason Rudolph",y:"2024"},{n:"Zach Mettenberger",y:"2014, 2015"},{n:"Malik Willis",y:"2022"},{n:"Joshua Dobbs",y:"2022"},{n:"Blaine Gabbert",y:"2018"},{n:"Matt Cassel",y:"2016, 2017"},{n:"Ken Stabler",y:"1980, 1981"},{n:"Archie Manning",y:"1982, 1983"},{n:"Cody Carlson",y:"1988\u20131994"},{n:"Billy Volek",y:"2003\u20132005"},{n:"Neil O'Donnell",y:"1999\u20132003"},{n:"Chris Chandler",y:"1995, 1996"},{n:"Pete Beathard",y:"1967\u20131969"},{n:"Jacky Lee",y:"1960, 1961, 1963, 1967"},{n:"Lynn Dickey",y:"1971, 1973, 1974"},{n:"Gifford Nielsen",y:"1979, 1981\u20131983"},{n:"John Reaves",y:"1981"},{n:"Oliver Luck",y:"1983, 1985, 1986"},{n:"Charley Johnson",y:"1970, 1971"},{n:"Don Trull",y:"1964\u20131969"},{n:"John Hadl",y:"1976, 1977"},{n:"Brent Pease",y:"1987"},{n:"Charlie Whitehurst",y:"2014"},{n:"Rusty Smith",y:"2010"},{n:"Billy Joe Tolliver",y:"1994"},{n:"Bucky Richardson",y:"1994"},{n:"Will Furrer",y:"1995"},{n:"Matt Mauck",y:"2005"},{n:"Bob Davis",y:"1967\u20131969"},{n:"Jerry Rhome",y:"1970"},{n:"Kent Nix",y:"1972"},{n:"Buddy Humphrey",y:"1966"}]},
+{ab:"DEN",name:"Denver Broncos",jp:"\u30c7\u30f3\u30d0\u30fc\u30fb\u30d6\u30ed\u30f3\u30b3\u30b9",conf:"AFC West",color:"#fb4f14",qbs:[{n:"John Elway",y:"1983\u20131998"},{n:"Craig Morton",y:"1977\u20131982"},{n:"Peyton Manning",y:"2012\u20132015"},{n:"Jake Plummer",y:"2003\u20132006"},{n:"Brian Griese",y:"1999\u20132002"},{n:"Frank Tripucka",y:"1960\u20131963"},{n:"Jay Cutler",y:"2006\u20132008"},{n:"Steve Ramsey",y:"1971\u20131976"},{n:"Charley Johnson",y:"1972\u20131975"},{n:"Bo Nix",y:"2024\u2013present"},{n:"Russell Wilson",y:"2022, 2023"},{n:"Kyle Orton",y:"2009\u20132011"},{n:"Steve Tensi",y:"1967\u20131970"},{n:"Tim Tebow",y:"2010, 2011"},{n:"Drew Lock",y:"2019\u20132021"},{n:"Teddy Bridgewater",y:"2021"},{n:"Trevor Siemian",y:"2016, 2017"},{n:"Brock Osweiler",y:"2015, 2017"},{n:"Case Keenum",y:"2018"},{n:"Joe Flacco",y:"2019"},{n:"Steve DeBerg",y:"1981\u20131983"},{n:"Gary Kubiak",y:"1983, 1984, 1988, 1989"},{n:"Tommy Maddox",y:"1992"},{n:"Bubby Brister",y:"1998"},{n:"Gus Frerotte",y:"2000, 2001"},{n:"Chris Miller",y:"1999"},{n:"Steve Beuerlein",y:"2002, 2003"},{n:"Paxton Lynch",y:"2016, 2017"},{n:"Jarrett Stidham",y:"2023"},{n:"Brett Rypien",y:"2020, 2022"},{n:"Brandon Allen",y:"2019"},{n:"Marlin Briscoe",y:"1968"},{n:"Pete Liske",y:"1969, 1970"},{n:"Don Horn",y:"1971"},{n:"Jacky Lee",y:"1964, 1965"},{n:"Mickey Slaughter",y:"1963, 1965, 1966"},{n:"John McCormick",y:"1963, 1965, 1966"},{n:"Norris Weese",y:"1978, 1979"},{n:"Craig Penrose",y:"1976, 1978"},{n:"Matt Robinson",y:"1980"},{n:"Mark Herrmann",y:"1982"},{n:"Ken Karcher",y:"1987"},{n:"Hugh Millen",y:"1994"},{n:"Bill Musgrave",y:"1996"},{n:"Danny Kanell",y:"2003"},{n:"Chris Simms",y:"2009"},{n:"Jeff Driskel",y:"2020"},{n:"Kendall Hinton",y:"2020"}]},
+{ab:"KC",name:"Kansas City Chiefs",jp:"\u30ab\u30f3\u30b6\u30b9\u30b7\u30c6\u30a3\u30fb\u30c1\u30fc\u30d5\u30b9",conf:"AFC West",color:"#e31837",qbs:[{n:"Patrick Mahomes",y:"2017\u2013present"},{n:"Len Dawson",y:"1962\u20131975"},{n:"Trent Green",y:"2001\u20132006"},{n:"Bill Kenney",y:"1980\u20131988"},{n:"Alex Smith",y:"2013\u20132017"},{n:"Mike Livingston",y:"1968\u20131978"},{n:"Steve DeBerg",y:"1988\u20131991"},{n:"Elvis Grbac",y:"1997\u20132000"},{n:"Matt Cassel",y:"2009\u20132012"},{n:"Steve Fuller",y:"1979\u20131982"},{n:"Cotton Davidson",y:"1960\u20131962"},{n:"Rich Gannon",y:"1996\u20131998"},{n:"Joe Montana",y:"1993, 1994"},{n:"Dave Krieg",y:"1992, 1993"},{n:"Damon Huard",y:"2006\u20132008"},{n:"Brodie Croyle",y:"2007\u20132010"},{n:"Tyler Thigpen",y:"2008"},{n:"Steve Bono",y:"1994\u20131996"},{n:"Todd Blackledge",y:"1984\u20131987"},{n:"Warren Moon",y:"2000"},{n:"Brady Quinn",y:"2012"},{n:"Kyle Orton",y:"2011"},{n:"Tyler Palko",y:"2011"},{n:"Nick Foles",y:"2016"},{n:"Chase Daniel",y:"2013, 2014"},{n:"Matt Moore",y:"2019"},{n:"Chad Henne",y:"2020"},{n:"Blaine Gabbert",y:"2023"},{n:"Carson Wentz",y:"2024"},{n:"Gardner Minshew",y:"2025"},{n:"Chris Oladokun",y:"2025"},{n:"Hunter Enis",y:"1960"},{n:"Randy Duncan",y:"1961"},{n:"Eddie Wilson",y:"1963"},{n:"Pete Beathard",y:"1965"},{n:"Jacky Lee",y:"1968, 1969"},{n:"Tony Adams",y:"1975, 1977, 1978"},{n:"Ron Jaworski",y:"1989"},{n:"Steve Pelluer",y:"1989"},{n:"Mark Vlasic",y:"1991"},{n:"Frank Seurer",y:"1987"},{n:"Matt Stevens",y:"1987"},{n:"Doug Hudson",y:"1987"}]},
+{ab:"LV",name:"Las Vegas Raiders",jp:"\u30e9\u30b9\u30d9\u30ac\u30b9\u30fb\u30ec\u30a4\u30c0\u30fc\u30b9",conf:"AFC West",color:"#a5acaf",qbs:[{n:"Derek Carr",y:"2014\u20132022"},{n:"Ken Stabler",y:"1971\u20131979"},{n:"Daryle Lamonica",y:"1967\u20131974"},{n:"Rich Gannon",y:"1999\u20132004"},{n:"Tom Flores",y:"1960\u20131966"},{n:"Jim Plunkett",y:"1980\u20131986"},{n:"Jeff Hostetler",y:"1993\u20131996"},{n:"Jay Schroeder",y:"1988\u20131992"},{n:"Marc Wilson",y:"1981\u20131987"},{n:"Cotton Davidson",y:"1962\u20131966"},{n:"Steve Beuerlein",y:"1988, 1989"},{n:"Todd Marinovich",y:"1991, 1992"},{n:"Vince Evans",y:"1987, 1993, 1995"},{n:"Kerry Collins",y:"2004, 2005"},{n:"JaMarcus Russell",y:"2007\u20132009"},{n:"Carson Palmer",y:"2011, 2012"},{n:"Jason Campbell",y:"2010, 2011"},{n:"Bruce Gradkowski",y:"2009, 2010"},{n:"Terrelle Pryor",y:"2012, 2013"},{n:"Matt McGloin",y:"2013, 2016"},{n:"Jeff George",y:"1997, 1998"},{n:"Rick Mirer",y:"2003"},{n:"Andrew Walter",y:"2006, 2008"},{n:"Aaron Brooks",y:"2006"},{n:"Josh McCown",y:"2007"},{n:"Daunte Culpepper",y:"2007"},{n:"Matt Flynn",y:"2013"},{n:"EJ Manuel",y:"2017"},{n:"Jarrett Stidham",y:"2022"},{n:"Aidan O'Connell",y:"2023, 2024"},{n:"Jimmy Garoppolo",y:"2023"},{n:"Brian Hoyer",y:"2023"},{n:"Gardner Minshew",y:"2024"},{n:"Desmond Ridder",y:"2024"},{n:"Geno Smith",y:"2025"},{n:"Kenny Pickett",y:"2025"},{n:"Babe Parilli",y:"1960"},{n:"Don Heinrich",y:"1962"},{n:"Dick Wood",y:"1965"},{n:"George Blanda",y:"1968"},{n:"Dan Pastorini",y:"1980"},{n:"Larry Lawrence",y:"1974, 1975"},{n:"Mike Rae",y:"1976, 1977"},{n:"Rusty Hilger",y:"1987"},{n:"Billy Joe Hobert",y:"1995, 1996"},{n:"Donald Hollas",y:"1998"},{n:"Wade Wilson",y:"1998"},{n:"Marques Tuiasosopo",y:"2003, 2005"},{n:"Kyle Boller",y:"2011"},{n:"Charlie Frye",y:"2009"}]},
+{ab:"LAC",name:"Los Angeles Chargers",jp:"\u30ed\u30b5\u30f3\u30bc\u30eb\u30b9\u30fb\u30c1\u30e3\u30fc\u30b8\u30e3\u30fc\u30ba",conf:"AFC West",color:"#0080c6",qbs:[{n:"Philip Rivers",y:"2006\u20132019"},{n:"Dan Fouts",y:"1973\u20131987"},{n:"John Hadl",y:"1962\u20131972"},{n:"Stan Humphries",y:"1992\u20131997"},{n:"Justin Herbert",y:"2020\u2013present"},{n:"Drew Brees",y:"2002\u20132005"},{n:"Jack Kemp",y:"1960\u20131962"},{n:"Tobin Rote",y:"1963, 1964"},{n:"Dick Wood",y:"1962"},{n:"Johnny Unitas",y:"1973"},{n:"Marty Domres",y:"1969, 1970"},{n:"Wayne Clark",y:"1973"},{n:"Jesse Freitas",y:"1974, 1975"},{n:"Virgil Carter",y:"1975"},{n:"Clint Longley",y:"1976"},{n:"James Harris",y:"1977, 1978"},{n:"Cliff Olander",y:"1977"},{n:"Ed Luther",y:"1983, 1984"},{n:"Mark Herrmann",y:"1985\u20131987"},{n:"Tom Flick",y:"1986"},{n:"Rick Neuheisel",y:"1987"},{n:"Mike Kelley",y:"1987"},{n:"Babe Laufenberg",y:"1988"},{n:"Mark Malone",y:"1988"},{n:"Mark Vlasic",y:"1988, 1990"},{n:"Jim McMahon",y:"1989"},{n:"Billy Joe Tolliver",y:"1989, 1990"},{n:"John Friesz",y:"1990, 1991, 1993"},{n:"Bob Gagliano",y:"1992"},{n:"Gale Gilbert",y:"1994, 1995"},{n:"Sean Salisbury",y:"1996"},{n:"Jim Everett",y:"1997"},{n:"Craig Whelihan",y:"1997, 1998"},{n:"Ryan Leaf",y:"1998, 2000"},{n:"Jim Harbaugh",y:"1999, 2000"},{n:"Erik Kramer",y:"1999"},{n:"Moses Moreno",y:"2000"},{n:"Doug Flutie",y:"2001, 2003, 2004"},{n:"Tyrod Taylor",y:"2020"},{n:"Easton Stick",y:"2023"},{n:"Trey Lance",y:"2025"},{n:"Bob Clatterbuck",y:"1960"},{n:"Steve Tensi",y:"1966"}]},
+{ab:"DAL",name:"Dallas Cowboys",jp:"\u30c0\u30e9\u30b9\u30fb\u30ab\u30a6\u30dc\u30fc\u30a4\u30ba",conf:"NFC East",color:"#869397",qbs:[{n:"Troy Aikman",y:"1989\u20132000"},{n:"Dak Prescott",y:"2016\u2013present"},{n:"Tony Romo",y:"2006\u20132015"},{n:"Roger Staubach",y:"1969\u20131979"},{n:"Danny White",y:"1978\u20131988"},{n:"Don Meredith",y:"1960\u20131968"},{n:"Craig Morton",y:"1965\u20131974"},{n:"Quincy Carter",y:"2001\u20132003"},{n:"Cooper Rush",y:"2021, 2022, 2024"},{n:"Drew Bledsoe",y:"2005, 2006"},{n:"Eddie LeBaron",y:"1960\u20131963"},{n:"Gary Hogeboom",y:"1984, 1985"},{n:"Andy Dalton",y:"2020"},{n:"Jason Garrett",y:"1993, 1994, 1998, 1999"},{n:"Vinny Testaverde",y:"2004"},{n:"Chad Hutchinson",y:"2002"},{n:"Brad Johnson",y:"2008"},{n:"Jon Kitna",y:"2010"},{n:"Brandon Weeden",y:"2014, 2015"},{n:"Matt Cassel",y:"2015"},{n:"Kellen Moore",y:"2015"},{n:"Steve Pelluer",y:"1986\u20131988"},{n:"Bernie Kosar",y:"1993"},{n:"Rodney Peete",y:"1994"},{n:"Steve Beuerlein",y:"1991"},{n:"Steve Walsh",y:"1989"},{n:"Babe Laufenberg",y:"1990"},{n:"Anthony Wright",y:"2000, 2001"},{n:"Ryan Leaf",y:"2001"},{n:"Clint Stoerner",y:"2001"},{n:"Drew Henson",y:"2004"},{n:"Trey Lance",y:"2024"},{n:"Jerry Rhome",y:"1965, 1966"},{n:"John Roach",y:"1964"},{n:"Clint Longley",y:"1975"},{n:"Glenn Carano",y:"1981"},{n:"Reggie Collier",y:"1986"},{n:"Kevin Sweeney",y:"1987, 1988"},{n:"Don Heinrich",y:"1960"},{n:"Wade Wilson",y:"1996"},{n:"Kyle Orton",y:"2013"},{n:"Ben DiNucci",y:"2020"},{n:"Garrett Gilbert",y:"2020"},{n:"Stephen McGee",y:"2010"}]},
+{ab:"NYG",name:"New York Giants",jp:"\u30cb\u30e5\u30fc\u30e8\u30fc\u30af\u30fb\u30b8\u30e3\u30a4\u30a2\u30f3\u30c4",conf:"NFC East",color:"#0b2265",qbs:[{n:"Eli Manning",y:"2004\u20132019"},{n:"Phil Simms",y:"1979\u20131993"},{n:"Kerry Collins",y:"1999\u20132003"},{n:"Daniel Jones",y:"2019\u20132024"},{n:"Charlie Conerly",y:"1950\u20131961"},{n:"Fran Tarkenton",y:"1967\u20131971"},{n:"Y.A. Tittle",y:"1961\u20131964"},{n:"Jeff Hostetler",y:"1988\u20131992"},{n:"Dave Brown",y:"1994\u20131997"},{n:"Craig Morton",y:"1974\u20131976"},{n:"Norm Snead",y:"1972\u20131976"},{n:"Earl Morrall",y:"1965, 1966"},{n:"Kurt Warner",y:"2004"},{n:"Geno Smith",y:"2017"},{n:"Don Heinrich",y:"1955\u20131960"},{n:"Scott Brunner",y:"1980\u20131983"},{n:"Danny Kanell",y:"1997, 1998"},{n:"Kent Graham",y:"1992, 1998"},{n:"Jesse Palmer",y:"2003"},{n:"Tommy DeVito",y:"2023, 2024"},{n:"Tyrod Taylor",y:"2023"},{n:"Drew Lock",y:"2024"},{n:"Jaxson Dart",y:"2025"},{n:"Russell Wilson",y:"2025"},{n:"Jameis Winston",y:"2025"},{n:"George Shaw",y:"1959, 1960"},{n:"Travis Tidwell",y:"1950, 1951"},{n:"Tom Landry",y:"1952"},{n:"Arnie Galiffa",y:"1953"},{n:"Bob Clatterbuck",y:"1954"},{n:"Randy Johnson",y:"1971\u20131973"},{n:"Jim Del Gaizo",y:"1974"},{n:"Joe Pisarcik",y:"1977\u20131979"},{n:"Jerry Golsteyn",y:"1977, 1978"},{n:"Randy Dean",y:"1978"},{n:"Jeff Rutledge",y:"1983, 1987"},{n:"Gary Wood",y:"1964, 1966"},{n:"Tom Kennedy",y:"1966"},{n:"Colt McCoy",y:"2020"},{n:"Mike Glennon",y:"2021"},{n:"Jake Fromm",y:"2021"},{n:"Davis Webb",y:"2022"},{n:"Mike Busch",y:"1987"},{n:"Jim Crocicchia",y:"1987"}]},
+{ab:"PHI",name:"Philadelphia Eagles",jp:"\u30d5\u30a3\u30e9\u30c7\u30eb\u30d5\u30a3\u30a2\u30fb\u30a4\u30fc\u30b0\u30eb\u30b9",conf:"NFC East",color:"#004c54",qbs:[{n:"Donovan McNabb",y:"1999\u20132009"},{n:"Ron Jaworski",y:"1977\u20131986"},{n:"Randall Cunningham",y:"1985\u20131995"},{n:"Jalen Hurts",y:"2020\u2013present"},{n:"Norm Snead",y:"1964\u20131970"},{n:"Carson Wentz",y:"2016\u20132020"},{n:"Nick Foles",y:"2012\u20132014, 2017, 2018"},{n:"Norm Van Brocklin",y:"1958\u20131960"},{n:"Sonny Jurgensen",y:"1957, 1961\u20131963"},{n:"Roman Gabriel",y:"1973\u20131976"},{n:"Michael Vick",y:"2010\u20132013"},{n:"Sam Bradford",y:"2015"},{n:"Adrian Burk",y:"1951\u20131956"},{n:"Bobby Thomason",y:"1952\u20131957"},{n:"Jeff Garcia",y:"2006"},{n:"Mark Sanchez",y:"2014, 2015"},{n:"Gardner Minshew",y:"2021, 2022"},{n:"Kevin Kolb",y:"2009, 2010"},{n:"King Hill",y:"1962\u20131968"},{n:"Mike Boryla",y:"1974\u20131976"},{n:"A.J. Feeley",y:"2002, 2007"},{n:"Ty Detmer",y:"1996, 1997"},{n:"Rodney Peete",y:"1995, 1997, 1998"},{n:"Bobby Hoying",y:"1997, 1998"},{n:"Tommy Thompson",y:"1950"},{n:"Jack Concannon",y:"1964, 1966"},{n:"Pete Liske",y:"1971, 1972"},{n:"John Reaves",y:"1972"},{n:"Jim McMahon",y:"1991, 1992"},{n:"Jeff Kemp",y:"1991"},{n:"Bubby Brister",y:"1993, 1994"},{n:"Ken O'Brien",y:"1993"},{n:"Doug Pederson",y:"1999"},{n:"Koy Detmer",y:"1998, 2002, 2004"},{n:"Mike McMahon",y:"2005"},{n:"Vince Young",y:"2011"},{n:"Tanner McKee",y:"2024, 2025"},{n:"Kenny Pickett",y:"2024"},{n:"Joe Pisarcik",y:"1984"},{n:"Matt Cavanaugh",y:"1986"},{n:"Scott Tinsley",y:"1987"},{n:"Brad Goebel",y:"1991"},{n:"John Huarte",y:"1968"},{n:"George Mira",y:"1969"},{n:"Rick Arrington",y:"1970, 1971"}]},
+{ab:"WAS",name:"Washington Commanders",jp:"\u30ef\u30b7\u30f3\u30c8\u30f3\u30fb\u30b3\u30de\u30f3\u30c0\u30fc\u30ba",conf:"NFC East",color:"#5a1414",qbs:[{n:"Sonny Jurgensen",y:"1964\u20131974"},{n:"Joe Theismann",y:"1976\u20131985"},{n:"Mark Rypien",y:"1988\u20131993"},{n:"Billy Kilmer",y:"1971\u20131978"},{n:"Kirk Cousins",y:"2012\u20132017"},{n:"Robert Griffin III",y:"2012\u20132014"},{n:"Jason Campbell",y:"2006\u20132009"},{n:"Gus Frerotte",y:"1994\u20131998"},{n:"Jayden Daniels",y:"2024\u2013present"},{n:"Taylor Heinicke",y:"2021, 2022"},{n:"Sammy Baugh",y:"1950\u20131952"},{n:"Jay Schroeder",y:"1985\u20131987"},{n:"Doug Williams",y:"1987\u20131989"},{n:"Mark Brunell",y:"2004\u20132006"},{n:"Eddie LeBaron",y:"1952\u20131959"},{n:"Norm Snead",y:"1961\u20131963"},{n:"Brad Johnson",y:"1999, 2000"},{n:"Alex Smith",y:"2018, 2020"},{n:"Sam Howell",y:"2022, 2023"},{n:"Trent Green",y:"1998"},{n:"Patrick Ramsey",y:"2002\u20132005"},{n:"Rex Grossman",y:"2010, 2011"},{n:"Donovan McNabb",y:"2010"},{n:"Dwayne Haskins",y:"2019, 2020"},{n:"Case Keenum",y:"2019"},{n:"Colt McCoy",y:"2014, 2018, 2019"},{n:"Ryan Fitzpatrick",y:"2021"},{n:"Carson Wentz",y:"2022"},{n:"Marcus Mariota",y:"2025"},{n:"Harry Gilmer",y:"1950, 1951"},{n:"Jack Scarbath",y:"1953, 1954"},{n:"Al Dorow",y:"1954\u20131956"},{n:"Ralph Guglielmi",y:"1955, 1958\u20131960"},{n:"Heath Shuler",y:"1994, 1995"},{n:"Stan Humphries",y:"1990"},{n:"Rich Gannon",y:"1993"},{n:"Jeff George",y:"2000, 2001"},{n:"Tony Banks",y:"2001"},{n:"Shane Matthews",y:"2002"},{n:"Danny Wuerffel",y:"2002"},{n:"Tim Hasselbeck",y:"2003"},{n:"Todd Collins",y:"2007"},{n:"John Beck",y:"2011"},{n:"Kyle Allen",y:"2020"},{n:"Josh Johnson",y:"2018, 2025"},{n:"Mark Sanchez",y:"2018"},{n:"Garrett Gilbert",y:"2021"},{n:"Jeff Hostetler",y:"1997"},{n:"John Friesz",y:"1994"},{n:"Jeff Rutledge",y:"1990"},{n:"Cary Conklin",y:"1993"},{n:"Mike Kruczek",y:"1980"},{n:"Ed Rubbert",y:"1987"},{n:"Dick Shiner",y:"1965"},{n:"Jim Ninowski",y:"1968"},{n:"Randy Johnson",y:"1975"},{n:"Eagle Day",y:"1960"}]},
+{ab:"CHI",name:"Chicago Bears",jp:"\u30b7\u30ab\u30b4\u30fb\u30d9\u30a2\u30fc\u30ba",conf:"NFC North",color:"#0b162a",qbs:[{n:"Jay Cutler",y:"2009\u20132016"},{n:"Jim McMahon",y:"1982\u20131988"},{n:"Jim Harbaugh",y:"1988\u20131993"},{n:"Caleb Williams",y:"2024\u2013present"},{n:"Mitchell Trubisky",y:"2017\u20132020"},{n:"Erik Kramer",y:"1994\u20131998"},{n:"Justin Fields",y:"2021\u20132023"},{n:"Ed Brown",y:"1955\u20131961"},{n:"Bobby Douglass",y:"1969\u20131975"},{n:"Bob Avellini",y:"1975\u20131984"},{n:"Mike Tomczak",y:"1986\u20131990"},{n:"Rex Grossman",y:"2003\u20132008"},{n:"Kyle Orton",y:"2005, 2007, 2008"},{n:"Vince Evans",y:"1979\u20131983"},{n:"Mike Phipps",y:"1978\u20131980"},{n:"Nick Foles",y:"2020, 2021"},{n:"Andy Dalton",y:"2021"},{n:"Billy Wade",y:"1961\u20131965"},{n:"Rudy Bukich",y:"1964\u20131966"},{n:"Jack Concannon",y:"1967\u20131971"},{n:"Virgil Carter",y:"1968, 1969"},{n:"Gary Huff",y:"1973\u20131975"},{n:"Steve Fuller",y:"1984\u20131986"},{n:"Doug Flutie",y:"1986"},{n:"Brian Griese",y:"2007"},{n:"Brian Hoyer",y:"2016"},{n:"Matt Barkley",y:"2016"},{n:"Mike Glennon",y:"2017"},{n:"Chase Daniel",y:"2018, 2019"},{n:"Jim Miller",y:"1999\u20132002"},{n:"Shane Matthews",y:"1999\u20132001"},{n:"Cade McNown",y:"1999, 2000"},{n:"Tyson Bagent",y:"2023"},{n:"Nathan Peterman",y:"2022"},{n:"Trevor Siemian",y:"2022"},{n:"Jimmy Clausen",y:"2014, 2015"},{n:"Caleb Hanie",y:"2011"},{n:"Josh McCown",y:"2011, 2013"},{n:"Jason Campbell",y:"2012"},{n:"Kordell Stewart",y:"2003"},{n:"Chris Chandler",y:"2002"},{n:"Steve Walsh",y:"1994"},{n:"Dave Krieg",y:"1996"},{n:"Rick Mirer",y:"1997"},{n:"Peter Tom Willis",y:"1992, 1993"},{n:"Todd Collins",y:"2010"},{n:"George Blanda",y:"1952\u20131954"},{n:"Zeke Bratkowski",y:"1954, 1957\u20131960"},{n:"Johnny Lujack",y:"1950, 1951"},{n:"Steve Romanik",y:"1951, 1952"},{n:"Bob Williams",y:"1952"},{n:"Kent Nix",y:"1971"},{n:"Mike Hohensee",y:"1987"},{n:"Steve Bradley",y:"1987"},{n:"Anthony Dilweg",y:"1989, 1990"},{n:"Steve Stenstrom",y:"1998"},{n:"Moses Moreno",y:"1998"}]},
+{ab:"DET",name:"Detroit Lions",jp:"\u30c7\u30c8\u30ed\u30a4\u30c8\u30fb\u30e9\u30a4\u30aa\u30f3\u30ba",conf:"NFC North",color:"#0076b6",qbs:[{n:"Matthew Stafford",y:"2009\u20132020"},{n:"Jared Goff",y:"2021\u2013present"},{n:"Bobby Layne",y:"1950\u20131958"},{n:"Greg Landry",y:"1968\u20131977"},{n:"Scott Mitchell",y:"1994\u20131998"},{n:"Bill Munson",y:"1968\u20131975"},{n:"Gary Danielson",y:"1977\u20131984"},{n:"Eric Hipple",y:"1981\u20131989"},{n:"Milt Plum",y:"1962\u20131967"},{n:"Joey Harrington",y:"2002\u20132005"},{n:"Charlie Batch",y:"1998\u20132001"},{n:"Tobin Rote",y:"1957\u20131959"},{n:"Earl Morrall",y:"1959\u20131965"},{n:"Rodney Peete",y:"1989\u20131993"},{n:"Erik Kramer",y:"1991\u20131993"},{n:"Jon Kitna",y:"2006\u20132008"},{n:"Dan Orlovsky",y:"2008"},{n:"Daunte Culpepper",y:"2008, 2009"},{n:"Drew Stanton",y:"2009, 2010"},{n:"Shaun Hill",y:"2010"},{n:"Jim Ninowski",y:"1960, 1961"},{n:"Chuck Long",y:"1986\u20131988"},{n:"Bob Gagliano",y:"1989, 1990"},{n:"Andre Ware",y:"1990, 1992, 1993"},{n:"Dave Krieg",y:"1994"},{n:"Frank Reich",y:"1998"},{n:"Jeff Garcia",y:"2005"},{n:"Tom Dublinski",y:"1953, 1954"},{n:"Harry Gilmer",y:"1955"},{n:"Jim Hardy",y:"1952"},{n:"Karl Sweetan",y:"1966, 1967"},{n:"George Izo",y:"1965"},{n:"Joe Reed",y:"1975\u20131977"},{n:"Jeff Komlo",y:"1979, 1981"},{n:"Jerry Golsteyn",y:"1979"},{n:"Don Majkowski",y:"1996"},{n:"Joe Ferguson",y:"1985, 1986"},{n:"Todd Hons",y:"1987"},{n:"Rusty Hilger",y:"1988"},{n:"John Witkowski",y:"1984"},{n:"Stoney Case",y:"2000"},{n:"Ty Detmer",y:"2001"},{n:"Mike McMahon",y:"2001, 2002"},{n:"David Blough",y:"2019"},{n:"Jeff Driskel",y:"2019"},{n:"Tim Boyle",y:"2021"}]},
+{ab:"GB",name:"Green Bay Packers",jp:"\u30b0\u30ea\u30fc\u30f3\u30d9\u30a4\u30fb\u30d1\u30c3\u30ab\u30fc\u30ba",conf:"NFC North",color:"#203731",qbs:[{n:"Brett Favre",y:"1992\u20132007"},{n:"Aaron Rodgers",y:"2008\u20132022"},{n:"Bart Starr",y:"1956\u20131971"},{n:"Jordan Love",y:"2023\u2013present"},{n:"Lynn Dickey",y:"1976\u20131985"},{n:"Tobin Rote",y:"1950\u20131956"},{n:"Don Majkowski",y:"1987\u20131992"},{n:"David Whitehurst",y:"1977\u20131983"},{n:"Randy Wright",y:"1984\u20131988"},{n:"Brett Hundley",y:"2017"},{n:"Matt Flynn",y:"2008\u20132013"},{n:"Scott Hunter",y:"1971\u20131973"},{n:"John Hadl",y:"1974, 1975"},{n:"Lamar McHan",y:"1959, 1960"},{n:"Babe Parilli",y:"1952, 1953, 1957, 1958"},{n:"Zeke Bratkowski",y:"1963\u20131971"},{n:"Jerry Tagge",y:"1972\u20131974"},{n:"Anthony Dilweg",y:"1989, 1990"},{n:"Mike Tomczak",y:"1991"},{n:"Jim Zorn",y:"1985"},{n:"Alan Risher",y:"1987"},{n:"John Roach",y:"1963"},{n:"Don Horn",y:"1969, 1970"},{n:"Seneca Wallace",y:"2013"},{n:"Scott Tolzien",y:"2013"},{n:"Bob Lee",y:"1976"}]},
+{ab:"MIN",name:"Minnesota Vikings",jp:"\u30df\u30cd\u30bd\u30bf\u30fb\u30d0\u30a4\u30ad\u30f3\u30b0\u30b9",conf:"NFC North",color:"#4f2683",qbs:[{n:"Fran Tarkenton",y:"1961\u20131966, 1972\u20131978"},{n:"Tommy Kramer",y:"1977\u20131989"},{n:"Wade Wilson",y:"1983\u20131991"},{n:"Kirk Cousins",y:"2018\u20132023"},{n:"Daunte Culpepper",y:"2000\u20132005"},{n:"Warren Moon",y:"1994\u20131996"},{n:"Brad Johnson",y:"1996\u20131998, 2005\u20132006"},{n:"Randall Cunningham",y:"1997\u20131999"},{n:"Brett Favre",y:"2009, 2010"},{n:"Joe Kapp",y:"1967\u20131969"},{n:"Sam Darnold",y:"2024"},{n:"Christian Ponder",y:"2011\u20132014"},{n:"Rich Gannon",y:"1990\u20131992"},{n:"Teddy Bridgewater",y:"2014, 2015"},{n:"Case Keenum",y:"2017"},{n:"Sam Bradford",y:"2016, 2017"},{n:"Tarvaris Jackson",y:"2006\u20132010"},{n:"Gary Cuozzo",y:"1969\u20131971"},{n:"Jim McMahon",y:"1993"},{n:"Steve Dils",y:"1980, 1981, 1983, 1984"},{n:"Jeff George",y:"1999"},{n:"Gus Frerotte",y:"2003, 2008"},{n:"Matt Cassel",y:"2013, 2014"},{n:"J.J. McCarthy",y:"2025"},{n:"Carson Wentz",y:"2025"},{n:"Donovan McNabb",y:"2011"},{n:"Josh Freeman",y:"2013"},{n:"Joshua Dobbs",y:"2023"},{n:"Nick Mullens",y:"2023"},{n:"Jaren Hall",y:"2023"},{n:"Archie Manning",y:"1984"},{n:"George Shaw",y:"1961"},{n:"Ron Vander Kelen",y:"1963, 1966, 1967"},{n:"Bob Berry",y:"1966, 1974"},{n:"Bob Lee",y:"1970, 1971, 1976, 1977"},{n:"Norm Snead",y:"1971"},{n:"Tony Adams",y:"1987"},{n:"Sean Salisbury",y:"1992\u20131994"},{n:"Todd Bouman",y:"2001"},{n:"Spergon Wynn",y:"2001"},{n:"Kelly Holcomb",y:"2007"},{n:"Brooks Bollinger",y:"2007"},{n:"Joe Webb",y:"2010"},{n:"Shaun Hill",y:"2016"},{n:"Sean Mannion",y:"2019, 2021"},{n:"Max Brosmer",y:"2025"}]},
+{ab:"ATL",name:"Atlanta Falcons",jp:"\u30a2\u30c8\u30e9\u30f3\u30bf\u30fb\u30d5\u30a1\u30eb\u30b3\u30f3\u30ba",conf:"NFC South",color:"#a71930",qbs:[{n:"Matt Ryan",y:"2008\u20132021"},{n:"Steve Bartkowski",y:"1975\u20131985"},{n:"Michael Vick",y:"2001\u20132006"},{n:"Chris Chandler",y:"1997\u20132001"},{n:"Chris Miller",y:"1987\u20131993"},{n:"Jeff George",y:"1994\u20131996"},{n:"Bobby Hebert",y:"1993, 1996"},{n:"Kirk Cousins",y:"2024, 2025"},{n:"Michael Penix Jr.",y:"2024, 2025"},{n:"Marcus Mariota",y:"2022"},{n:"Desmond Ridder",y:"2022, 2023"},{n:"Taylor Heinicke",y:"2023"},{n:"Matt Schaub",y:"2004, 2005, 2019"},{n:"Joey Harrington",y:"2007"},{n:"Chris Redman",y:"2007, 2009"},{n:"Byron Leftwich",y:"2007"},{n:"Randy Johnson",y:"1966\u20131970"},{n:"Bob Berry",y:"1968\u20131972"},{n:"Dick Shiner",y:"1971, 1973"},{n:"Bob Lee",y:"1973, 1974"},{n:"June Jones",y:"1978, 1979"},{n:"Scott Hunter",y:"1976, 1977"},{n:"Billy Joe Tolliver",y:"1991\u20131993, 1997"},{n:"Wade Wilson",y:"1992"},{n:"Tony Graziani",y:"1997\u20131999"},{n:"Steve DeBerg",y:"1998"},{n:"Danny Kanell",y:"1999, 2000"},{n:"Doug Johnson",y:"2000, 2002, 2003"},{n:"David Archer",y:"1985\u20131987"},{n:"Turk Schonert",y:"1986"},{n:"Hugh Millen",y:"1989, 1990"},{n:"Erik Kramer",y:"1987"},{n:"Pat Sullivan",y:"1974\u20131976"},{n:"Kim McQuilken",y:"1974\u20131976"},{n:"Scott Campbell",y:"1987, 1990"},{n:"Dennis Claridge",y:"1966"},{n:"Mike Moroski",y:"1983, 1984"}]},
+{ab:"CAR",name:"Carolina Panthers",jp:"\u30ab\u30ed\u30e9\u30a4\u30ca\u30fb\u30d1\u30f3\u30b5\u30fc\u30ba",conf:"NFC South",color:"#0085ca",qbs:[{n:"Cam Newton",y:"2011\u20132019"},{n:"Jake Delhomme",y:"2003\u20132009"},{n:"Kerry Collins",y:"1995\u20131998"},{n:"Steve Beuerlein",y:"1995\u20132000"},{n:"Bryce Young",y:"2023\u2013present"},{n:"Baker Mayfield",y:"2022"},{n:"Sam Darnold",y:"2021, 2022"},{n:"Andy Dalton",y:"2023\u20132025"},{n:"Teddy Bridgewater",y:"2020"},{n:"P.J. Walker",y:"2020\u20132022"},{n:"Frank Reich",y:"1995"},{n:"Chris Weinke",y:"2001, 2002, 2006"},{n:"Rodney Peete",y:"2002, 2003"},{n:"Derek Anderson",y:"2014, 2016"},{n:"Kyle Allen",y:"2018, 2019"},{n:"Taylor Heinicke",y:"2018"},{n:"Will Grier",y:"2019"},{n:"Vinny Testaverde",y:"2007"},{n:"David Carr",y:"2007"},{n:"Matt Moore",y:"2007, 2009, 2010"},{n:"Jimmy Clausen",y:"2010"},{n:"Brian St. Pierre",y:"2010"},{n:"Matt Lytle",y:"2001"},{n:"Randy Fasani",y:"2002"}]},
+{ab:"NO",name:"New Orleans Saints",jp:"\u30cb\u30e5\u30fc\u30aa\u30fc\u30ea\u30f3\u30ba\u30fb\u30bb\u30a4\u30f3\u30c4",conf:"NFC South",color:"#d3bc8d",qbs:[{n:"Drew Brees",y:"2006\u20132020"},{n:"Archie Manning",y:"1971\u20131982"},{n:"Aaron Brooks",y:"2000\u20132005"},{n:"Bobby Hebert",y:"1985\u20131992"},{n:"Jim Everett",y:"1994\u20131996"},{n:"Billy Kilmer",y:"1967\u20131970"},{n:"Gary Cuozzo",y:"1967"},{n:"Ken Stabler",y:"1982, 1983"},{n:"Richard Todd",y:"1984"},{n:"Taysom Hill",y:"2020, 2021"},{n:"Jameis Winston",y:"2021, 2022"},{n:"Derek Carr",y:"2023, 2024"},{n:"Spencer Rattler",y:"2024, 2025"},{n:"Teddy Bridgewater",y:"2018, 2019"},{n:"Andy Dalton",y:"2022"},{n:"Jeff Blake",y:"2000"},{n:"Steve Walsh",y:"1990, 1991, 1993"},{n:"Wade Wilson",y:"1993"},{n:"Bobby Scott",y:"1973, 1974, 1976, 1977, 1981"},{n:"Bobby Douglass",y:"1976, 1977"},{n:"Dave Wilson",y:"1981, 1983\u20131986"},{n:"John Fourcade",y:"1987, 1989, 1990"},{n:"Edd Hargett",y:"1970, 1971"},{n:"Karl Sweetan",y:"1968"},{n:"Mark Brunell",y:"2009"},{n:"Trevor Siemian",y:"2021"},{n:"Ian Book",y:"2021"},{n:"Jake Haener",y:"2024"},{n:"Tyler Shough",y:"2025"},{n:"Heath Shuler",y:"1997"},{n:"Billy Joe Hobert",y:"1997\u20131999"},{n:"Danny Wuerffel",y:"1997, 1998"},{n:"Kerry Collins",y:"1998"},{n:"Billy Joe Tolliver",y:"1998, 1999"},{n:"Jake Delhomme",y:"1999"},{n:"Todd Bouman",y:"2005"},{n:"Luke McCown",y:"2015"},{n:"Guido Merkens",y:"1982"},{n:"Larry Cipa",y:"1974, 1975"},{n:"Doug Nussmeier",y:"1996, 1997"},{n:"Mike Buck",y:"1993"}]},
+{ab:"TB",name:"Tampa Bay Buccaneers",jp:"\u30bf\u30f3\u30d1\u30d9\u30a4\u30fb\u30d0\u30c3\u30ab\u30cb\u30a2\u30fc\u30ba",conf:"NFC South",color:"#d50a0a",qbs:[{n:"Tom Brady",y:"2020\u20132022"},{n:"Jameis Winston",y:"2015\u20132019"},{n:"Trent Dilfer",y:"1994\u20131999"},{n:"Baker Mayfield",y:"2023\u2013present"},{n:"Vinny Testaverde",y:"1987\u20131992"},{n:"Josh Freeman",y:"2009\u20132013"},{n:"Doug Williams",y:"1978\u20131982"},{n:"Brad Johnson",y:"2001\u20132004"},{n:"Steve Young",y:"1985, 1986"},{n:"Craig Erickson",y:"1993, 1994"},{n:"Shaun King",y:"1999, 2000, 2002"},{n:"Steve DeBerg",y:"1984\u20131987, 1992, 1993"},{n:"Jeff Garcia",y:"2007, 2008"},{n:"Ryan Fitzpatrick",y:"2017, 2018"},{n:"Chris Simms",y:"2004\u20132006"},{n:"Brian Griese",y:"2004, 2005, 2008"},{n:"Mike Glennon",y:"2013, 2014"},{n:"Josh McCown",y:"2014"},{n:"Jack Thompson",y:"1983, 1984"},{n:"Byron Leftwich",y:"2009"},{n:"Josh Johnson",y:"2009, 2011"},{n:"Rob Johnson",y:"2002"},{n:"Eric Zeier",y:"1999"},{n:"Bruce Gradkowski",y:"2006"},{n:"Tim Rattay",y:"2006"},{n:"Luke McCown",y:"2007"},{n:"Steve Spurrier",y:"1976"},{n:"Gary Huff",y:"1977"},{n:"Randy Hedberg",y:"1977"},{n:"Jeb Blount",y:"1977"},{n:"Mike Boryla",y:"1978"},{n:"Mike Rae",y:"1978"},{n:"Terry Hanratty",y:"1976"},{n:"Parnell Dickinson",y:"1976"},{n:"Jerry Golsteyn",y:"1983"},{n:"John Reaves",y:"1987"},{n:"Jim Zorn",y:"1987"},{n:"Joe Ferguson",y:"1988, 1989"},{n:"Chris Chandler",y:"1990, 1991"},{n:"Jeff Carlson",y:"1991"}]},
+{ab:"ARI",name:"Arizona Cardinals",jp:"\u30a2\u30ea\u30be\u30ca\u30fb\u30ab\u30fc\u30b8\u30ca\u30eb\u30b9",conf:"NFC West",color:"#97233f",qbs:[{n:"Jim Hart",y:"1967\u20131983"},{n:"Neil Lomax",y:"1981\u20131988"},{n:"Kyler Murray",y:"2019\u2013present"},{n:"Jake Plummer",y:"1997\u20132002"},{n:"Charley Johnson",y:"1961\u20131969"},{n:"Carson Palmer",y:"2013\u20132017"},{n:"Kurt Warner",y:"2005\u20132009"},{n:"Lamar McHan",y:"1954\u20131958"},{n:"King Hill",y:"1959, 1960"},{n:"Jacoby Brissett",y:"2025"},{n:"Josh Rosen",y:"2018"},{n:"Sam Bradford",y:"2018"},{n:"Matt Leinart",y:"2006, 2007"},{n:"Derek Anderson",y:"2010"},{n:"John Skelton",y:"2010, 2011"},{n:"Kevin Kolb",y:"2011, 2012"},{n:"Ryan Lindley",y:"2012, 2014"},{n:"Drew Stanton",y:"2014, 2016, 2017"},{n:"Blaine Gabbert",y:"2017"},{n:"Brian Hoyer",y:"2012"},{n:"Josh McCown",y:"2003\u20132005"},{n:"Colt McCoy",y:"2021, 2022"},{n:"Joshua Dobbs",y:"2023"},{n:"Clayton Tune",y:"2023"},{n:"David Blough",y:"2022"},{n:"Trace McSorley",y:"2022"},{n:"Jeff Blake",y:"2003"},{n:"John Navarre",y:"2004"},{n:"Shaun King",y:"2004"},{n:"Dave Krieg",y:"1995"},{n:"Jay Schroeder",y:"1994"},{n:"Steve Beuerlein",y:"1993, 1994"},{n:"Jim McMahon",y:"1994"},{n:"Boomer Esiason",y:"1996"},{n:"Kent Graham",y:"1996, 1997"},{n:"Stoney Case",y:"1997"},{n:"Dave Brown",y:"1999, 2000"},{n:"Gary Hogeboom",y:"1989"},{n:"Timm Rosenbach",y:"1989, 1990, 1992"},{n:"Tom Tupa",y:"1989, 1991"},{n:"Stan Gelbaugh",y:"1991"},{n:"Chris Chandler",y:"1991\u20131993"},{n:"Cliff Stoudt",y:"1986, 1988"},{n:"Jim Hardy",y:"1950, 1951"},{n:"Frank Tripucka",y:"1950\u20131952"},{n:"Charley Trippi",y:"1951, 1952"},{n:"Jim Root",y:"1953, 1956"},{n:"Steve Romanik",y:"1953, 1954"},{n:"Ogden Compton",y:"1955"},{n:"M.C. Reynolds",y:"1958"},{n:"John Roach",y:"1959, 1960"},{n:"George Izo",y:"1960"},{n:"Sam Etcheverry",y:"1961, 1962"},{n:"Ralph Guglielmi",y:"1961"},{n:"Buddy Humphrey",y:"1965"},{n:"Terry Nofsinger",y:"1966"},{n:"Pete Beathard",y:"1971"},{n:"Gary Cuozzo",y:"1972"},{n:"Tim Van Galder",y:"1972"},{n:"Gary Keithley",y:"1973"},{n:"Steve Pisarkiewicz",y:"1978, 1979"},{n:"Mike Loyd",y:"1980"},{n:"Shawn Halloran",y:"1987"},{n:"Sammy Garza",y:"1987"},{n:"Max Hall",y:"2010"}]},
+{ab:"LAR",name:"Los Angeles Rams",jp:"\u30ed\u30b5\u30f3\u30bc\u30eb\u30b9\u30fb\u30e9\u30e0\u30ba",conf:"NFC West",color:"#003594",qbs:[{n:"Roman Gabriel",y:"1962\u20131972"},{n:"Matthew Stafford",y:"2021\u2013present"},{n:"Jim Everett",y:"1986\u20131993"},{n:"Marc Bulger",y:"2002\u20132009"},{n:"Norm Van Brocklin",y:"1950\u20131957"},{n:"Kurt Warner",y:"1999\u20132003"},{n:"Jared Goff",y:"2016\u20132020"},{n:"Sam Bradford",y:"2010\u20132013"},{n:"Pat Haden",y:"1976\u20131981"},{n:"Vince Ferragamo",y:"1979\u20131984"},{n:"Bob Waterfield",y:"1950\u20131952"},{n:"James Harris",y:"1974\u20131976"},{n:"Ron Jaworski",y:"1974, 1975"},{n:"Dieter Brock",y:"1985"},{n:"Chris Miller",y:"1993"},{n:"Mark Rypien",y:"1994, 1995"},{n:"Tony Banks",y:"1996\u20131998"},{n:"Trent Green",y:"1999"},{n:"Case Keenum",y:"2015"},{n:"Nick Foles",y:"2015"},{n:"Jimmy Garoppolo",y:"2024"},{n:"John Wolford",y:"2019\u20132022"},{n:"Bryce Perkins",y:"2022, 2023"},{n:"Baker Mayfield",y:"2024"},{n:"Carson Wentz",y:"2023"},{n:"Ryan Fitzpatrick",y:"2020"},{n:"Gus Frerotte",y:"1998"},{n:"Jeff Kemp",y:"1984, 1985"},{n:"Bill Munson",y:"1964, 1965"},{n:"Frank Ryan",y:"1963"},{n:"John Hadl",y:"1973, 1974"},{n:"Joe Namath",y:"1977"},{n:"Dan Pastorini",y:"1981"},{n:"Bert Jones",y:"1982"},{n:"Austin Davis",y:"2014"},{n:"Kellen Clemens",y:"2015"},{n:"Pete Beathard",y:"1967, 1968"},{n:"Steve Dils",y:"1983, 1984"},{n:"Terry Baker",y:"1963"},{n:"Sean Mannion",y:"2015"}]},
+{ab:"SF",name:"San Francisco 49ers",jp:"\u30b5\u30f3\u30d5\u30e9\u30f3\u30b7\u30b9\u30b3\u30fb\u30d5\u30a9\u30fc\u30c6\u30a3\u30ca\u30a4\u30ca\u30fc\u30ba",conf:"NFC West",color:"#aa0000",qbs:[{n:"Joe Montana",y:"1979\u20131992"},{n:"Steve Young",y:"1987\u20131999"},{n:"John Brodie",y:"1957\u20131973"},{n:"Y.A. Tittle",y:"1951\u20131960"},{n:"Brock Purdy",y:"2022\u2013present"},{n:"Jimmy Garoppolo",y:"2017\u20132022"},{n:"Alex Smith",y:"2005\u20132012"},{n:"Jeff Garcia",y:"1999\u20132003"},{n:"Colin Kaepernick",y:"2012\u20132016"},{n:"Blaine Gabbert",y:"2015, 2016"},{n:"Steve DeBerg",y:"1978\u20131980"},{n:"Jim Plunkett",y:"1976, 1977"},{n:"Frankie Albert",y:"1950\u20131952"},{n:"Trey Lance",y:"2021, 2022"},{n:"Nick Mullens",y:"2018\u20132020"},{n:"C.J. Beathard",y:"2017, 2018, 2020"},{n:"Shaun Hill",y:"2008, 2009"},{n:"J.T. O'Sullivan",y:"2008"},{n:"Brian Hoyer",y:"2017"},{n:"Tim Rattay",y:"2003\u20132005"},{n:"Ken Dorsey",y:"2004, 2005"},{n:"Elvis Grbac",y:"1995, 1996"},{n:"Steve Bono",y:"1991"},{n:"Jeff Kemp",y:"1986"},{n:"Matt Cavanaugh",y:"1984, 1985"},{n:"Bob Gagliano",y:"1987"},{n:"Troy Smith",y:"2010"},{n:"Earl Morrall",y:"1956"},{n:"Lamar McHan",y:"1963"},{n:"Steve Spurrier",y:"1967, 1969, 1972\u20131975"},{n:"Tom Owen",y:"1974, 1975"},{n:"Norm Snead",y:"1974, 1975"},{n:"Scott Bull",y:"1976, 1978"},{n:"Jim Druckenmiller",y:"1997"},{n:"Ty Detmer",y:"1998"},{n:"Steve Stenstrom",y:"1999"},{n:"Chris Weinke",y:"2007"},{n:"Trent Dilfer",y:"2007"},{n:"Sam Darnold",y:"2023"},{n:"Brandon Allen",y:"2024"},{n:"Joshua Dobbs",y:"2024"},{n:"Mac Jones",y:"2025"},{n:"Cody Pickett",y:"2005"},{n:"Jim Powers",y:"1953"},{n:"Jim Cason",y:"1954"},{n:"Bob Waters",y:"1963"},{n:"George Mira",y:"1964\u20131967"},{n:"Joe Reed",y:"1973, 1974"},{n:"Dennis Morrison",y:"1974"}]},
+{ab:"SEA",name:"Seattle Seahawks",jp:"\u30b7\u30a2\u30c8\u30eb\u30fb\u30b7\u30fc\u30db\u30fc\u30af\u30b9",conf:"NFC West",color:"#69be28",qbs:[{n:"Russell Wilson",y:"2012\u20132021"},{n:"Matt Hasselbeck",y:"2001\u20132010"},{n:"Dave Krieg",y:"1981\u20131991"},{n:"Jim Zorn",y:"1976\u20131984"},{n:"Geno Smith",y:"2021\u20132024"},{n:"Rick Mirer",y:"1993\u20131996"},{n:"Warren Moon",y:"1997, 1998"},{n:"Jon Kitna",y:"1997\u20132000"},{n:"Sam Darnold",y:"2025"},{n:"Tarvaris Jackson",y:"2011"},{n:"Charlie Whitehurst",y:"2010, 2011"},{n:"Seneca Wallace",y:"2006, 2008, 2009"},{n:"Drew Lock",y:"2023"},{n:"John Friesz",y:"1995\u20131998"},{n:"Stan Gelbaugh",y:"1992, 1996"},{n:"Trent Dilfer",y:"2001\u20132004"},{n:"Brock Huard",y:"2000"},{n:"Glenn Foley",y:"1999"},{n:"Charlie Frye",y:"2008"},{n:"Dan McGwire",y:"1991\u20131994"},{n:"Kelly Stouffer",y:"1988\u20131992"},{n:"Gale Gilbert",y:"1986"},{n:"Bruce Mathison",y:"1987"},{n:"Jeff Kemp",y:"1987, 1988, 1991"},{n:"Steve Myer",y:"1977"}]}
+];
+
+const TEAM_COLORS = {
+  BUF: { color:"#00338D", accent:"#C60C30" },
+  MIA: { color:"#008E97", accent:"#FC4C02" },
+  NE:  { color:"#002244", accent:"#C60C30" },
+  NYJ: { color:"#125740", accent:"#FFFFFF" },
+
+  BAL: { color:"#241773", accent:"#000000" },
+  CIN: { color:"#FB4F14", accent:"#000000" },
+  CLE: { color:"#311D00", accent:"#FF3C00" },
+  PIT: { color:"#101820", accent:"#FFB612" },
+
+  HOU: { color:"#03202F", accent:"#A71930" },
+  IND: { color:"#002C5F", accent:"#FFFFFF" },
+  JAX: { color:"#006778", accent:"#D7A22A" },
+  TEN: { color:"#0C2340", accent:"#4B92DB" },
+
+  DEN: { color:"#FB4F14", accent:"#002244" },
+  KC:  { color:"#E31837", accent:"#FFB81C" },
+  LV:  { color:"#000000", accent:"#A5ACAF" },
+  LAC: { color:"#0080C6", accent:"#FFC20E" },
+
+  DAL: { color:"#003594", accent:"#869397" },
+  NYG: { color:"#0B2265", accent:"#A71930" },
+  PHI: { color:"#004C54", accent:"#A5ACAF" },
+  WAS: { color:"#5A1414", accent:"#FFB612" },
+
+  CHI: { color:"#0B162A", accent:"#C83803" },
+  DET: { color:"#0076B6", accent:"#B0B7BC" },
+  GB:  { color:"#203731", accent:"#FFB612" },
+  MIN: { color:"#4F2683", accent:"#FFC62F" },
+
+  ATL: { color:"#A71930", accent:"#000000" },
+  CAR: { color:"#101820", accent:"#0085CA" },
+  NO:  { color:"#101820", accent:"#D3BC8D" },
+  TB:  { color:"#D50A0A", accent:"#34302B" },
+
+  ARI: { color:"#97233F", accent:"#000000" },
+  LAR: { color:"#003594", accent:"#FFA300" },
+  SF:  { color:"#AA0000", accent:"#B3995D" },
+  SEA: { color:"#002244", accent:"#69BE28" }
+};
+
+TEAMS.forEach(team => {
+  if (TEAM_COLORS[team.ab]) {
+    team.color = TEAM_COLORS[team.ab].color;
+    team.accent = TEAM_COLORS[team.ab].accent;
+  }
+});
+const CONF_ORDER=["AFC East","AFC North","AFC South","AFC West","NFC East","NFC North","NFC South","NFC West"];
+const GOAL=5;
+const TOTAL_QBS=TEAMS.reduce((sum,t)=>sum+t.qbs.length,0);
+
+// ── Matching ──────────────────────────────────────────────
+const SUFFIXES=new Set(["jr","sr","ii","iii","iv","v"]);
+const ALIASES={
+  "rg3":"Robert Griffin III","rgiii":"Robert Griffin III",
+  "big ben":"Ben Roethlisberger","fitzmagic":"Ryan Fitzpatrick",
+  "johnny football":"Johnny Manziel","broadway joe":"Joe Namath","tua":"Tua Tagovailoa"
+};
+
+function norm(s){
+  return s.toLowerCase().replace(/[.,'`']/g,"").replace(/[-]/g," ").replace(/\s+/g," ").trim();
+}
+function tokensNoSuffix(s){
+  let t=norm(s).split(" ").filter(Boolean);
+  while(t.length>1&&SUFFIXES.has(t[t.length-1]))t.pop();
+  return t;
+}
+function lev(a,b){
+  const m=a.length,n=b.length;
+  if(!m)return n;if(!n)return m;
+  const d=Array.from({length:m+1},(_,i)=>[i,...Array(n).fill(0)]);
+  for(let j=0;j<=n;j++)d[0][j]=j;
+  for(let i=1;i<=m;i++)for(let j=1;j<=n;j++){
+    const c=a[i-1]===b[j-1]?0:1;
+    d[i][j]=Math.min(d[i-1][j]+1,d[i][j-1]+1,d[i-1][j-1]+c);
+  }
+  return d[m][n];
+}
+function buildIndex(qbs){
+  const surnameMap={};
+  const entries=qbs.map(q=>{
+    const t=tokensNoSuffix(q.n);
+    const fullKey=t.join(" ");
+    const surname=t[t.length-1];
+    const surnameMulti=t.slice(1).join(" ");
+    [...new Set([surname,surnameMulti])].forEach(k=>{if(k)(surnameMap[k]=surnameMap[k]||[]).push(q);});
+    return {q,fullKey,surname,surnameMulti};
+  });
+  return {entries,surnameMap};
+}
+function matchGuess(raw,idx){
+  const input=norm(raw);
+  if(!input)return null;
+  const inKey=tokensNoSuffix(raw).join(" ");
+  if(ALIASES[input]){
+    const cn=ALIASES[input];
+    const hit=idx.entries.find(e=>e.q.n===cn);
+    if(hit)return hit.q;
+  }
+  let e=idx.entries.find(x=>x.fullKey===inKey);
+  if(e)return e.q;
+  if(idx.surnameMap[inKey]){
+    if(idx.surnameMap[inKey].length===1)return idx.surnameMap[inKey][0];
+    return {ambiguous:true,key:inKey,candidates:idx.surnameMap[inKey]};
+  }
+  let best=null,bd=99;
+  for(const x of idx.entries){const d=lev(inKey,x.fullKey);if(d<bd){bd=d;best=x;}}
+  if(best){const tol=best.fullKey.length>=10?2:(best.fullKey.length>=6?1:0);if(bd<=tol)return best.q;}
+  best=null;bd=99;let bestSn=null;
+  for(const sn of Object.keys(idx.surnameMap)){
+    if(idx.surnameMap[sn].length!==1)continue;
+    const d=lev(inKey,sn);
+    if(d<bd){bd=d;bestSn=sn;}
+  }
+  if(bestSn){const tol=bestSn.length>=6?1:0;if(bd<=tol)return idx.surnameMap[bestSn][0];}
+  return null;
+}
+
+// ── State ──────────────────────────────────────────────────
+let state={team:null,idx:null,got:[],misses:0,startTime:0,elapsed:0};
+let timerId=null;
+const $=id=>document.getElementById(id);
+const appScreen=$("appScreen"), homeScreen=$("homeScreen"), playScreen=$("playScreen"), resultScreen=$("resultScreen");
+
+function showHome(){
+  renderSampleTeams();
+  stopTimer();
+  state={team:null,idx:null,got:[],misses:0,startTime:0,elapsed:0};
+  resultScreen.classList.add("hidden");
+  playScreen.classList.add("hidden");
+  homeScreen.classList.remove("hidden");
+  appScreen.classList.remove("hidden");
+}
+function showPlay(){
+  resultScreen.classList.add("hidden");
+  homeScreen.classList.add("hidden");
+  playScreen.classList.remove("hidden");
+  appScreen.classList.remove("hidden");
+}
+function showResult(){
+  appScreen.classList.add("hidden");
+  resultScreen.classList.remove("hidden");
+}
+function openTeamModal(){renderTeamList("modalConfList");$("teamModal").classList.remove("hidden");$("teamModal").setAttribute("aria-hidden","false");}
+function closeTeamModal(){$("teamModal").classList.add("hidden");$("teamModal").setAttribute("aria-hidden","true");}
+function openHowTo(){$("howToModal").classList.remove("hidden");$("howToModal").setAttribute("aria-hidden","false");}
+function closeHowTo(){$("howToModal").classList.add("hidden");$("howToModal").setAttribute("aria-hidden","true");}
+
+// ── Team select ────────────────────────────────────────────
+function shortName(team){
+  return team.name.replace(/^(Arizona|Atlanta|Baltimore|Buffalo|Carolina|Chicago|Cincinnati|Cleveland|Dallas|Denver|Detroit|Green Bay|Houston|Indianapolis|Jacksonville|Kansas City|Las Vegas|Los Angeles|Miami|Minnesota|New England|New Orleans|New York|Philadelphia|Pittsburgh|San Francisco|Seattle|Tampa Bay|Tennessee|Washington)\s+/,"");
+}
+function renderTeamList(hostId){
+  const host=$(hostId);host.innerHTML="";
+  CONF_ORDER.forEach(conf=>{
+    const h=document.createElement("h3");h.textContent=conf;host.appendChild(h);
+    const g=document.createElement("div");g.className="grid";
+    TEAMS.filter(t=>t.conf===conf).forEach(t=>{
+      const b=document.createElement("button");
+      b.className="team"+(state.team&&state.team.ab===t.ab?" active":"");
+      b.style.setProperty("--tc",t.color||"#555");
+      b.innerHTML=`<div class="ab">${t.ab}</div><div class="jp">${shortName(t)}</div>`;
+      b.onclick=()=>{closeTeamModal();startTeam(t);};
+      g.appendChild(b);
+    });
+    host.appendChild(g);
+  });
+}
+function renderHeroCopy(){
+  $("heroCopy").textContent=`Find 5 starting QBs from ${TOTAL_QBS} players across all 32 NFL teams`;
+  $("startCopy").innerHTML=`Choose from all 32 NFL teams and a database of ${TOTAL_QBS} historical starting QBs.<br>Pick a team and name 5 QBs in English.<br>Get all 5 right to clear the gauntlet.`;
+}
+function pickRandomTeams(count=4){
+  return [...TEAMS].sort(()=>Math.random()-.5).slice(0,count);
+}
+function renderSampleTeams(){
+  const host=$("sampleTeams");
+  if(!host)return;
+  host.innerHTML="";
+  pickRandomTeams(4).forEach(t=>{
+    const b=document.createElement("button");
+    b.className="sample-team";b.type="button";
+    b.style.setProperty("--tc",t.color||"#64748b");
+    b.innerHTML=`<strong>${t.ab}</strong><span>${shortName(t)}</span>`;
+    b.onclick=()=>startTeam(t);
+    host.appendChild(b);
+  });
+}
+
+function startTeam(team){
+  state={team,idx:buildIndex(team.qbs),got:[],misses:0,startTime:Date.now(),elapsed:0};
+  const head=$("playHead");
+  head.style.setProperty("--tc",team.color||"#333");
+  head.innerHTML=`
+    <div class="team-title">
+      <div class="team-logo">${team.ab}</div>
+      <div class="meta">
+        <div class="eng">${team.ab} / ${team.name}</div>
+        <button class="change-team" id="changeTeamBtn" type="button">Change Team</button>
+      </div>
+    </div>
+    <div class="score"><div class="score-block"><span class="label">Score</span><span class="num" id="scoreNum">0 <small>/ ${GOAL}</small></span></div><div class="elapsed"><span class="label">Elapsed Time</span><span class="time" id="elapsedTime">00:00</span></div></div>`;
+  $("changeTeamBtn").onclick=openTeamModal;
+  startTimer();
+  renderPips();renderGot();
+  $("feedback").textContent="";$("feedback").className="feedback";
+  $("guess").value="";
+  showPlay();setTimeout(()=>$("guess").focus(),50);
+}
+
+function formatElapsed(seconds){
+  seconds=Number.isFinite(seconds)?Math.max(0,seconds):0;
+  const m=String(Math.floor(seconds/60)).padStart(2,"0");
+  const s=String(seconds%60).padStart(2,"0");
+  return `${m}:${s}`;
+}
+function updateElapsed(){
+  if(!state.startTime)return;
+  state.elapsed=Math.floor((Date.now()-state.startTime)/1000);
+  const el=$("elapsedTime");
+  if(el)el.textContent=formatElapsed(state.elapsed);
+}
+function startTimer(){
+  if(timerId)clearInterval(timerId);
+  updateElapsed();
+  timerId=setInterval(updateElapsed,1000);
+}
+function stopTimer(){
+  if(timerId){clearInterval(timerId);timerId=null;}
+  updateElapsed();
+}
+function renderPips(){
+  const host=$("pips");host.innerHTML="";
+  for(let i=0;i<GOAL;i++){
+    const p=document.createElement("div");
+    p.className="pip"+(i<state.got.length?" on":"");
+    p.textContent=i<state.got.length?"✓":"";host.appendChild(p);
+  }
+  const score=$("scoreNum");
+  if(score)score.innerHTML=`${state.got.length} <small>/ ${GOAL}</small>`;
+}
+function renderGot(){
+  const host=$("got");host.innerHTML="";
+  state.got.forEach(({n,y},i)=>{
+    const r=document.createElement("div");r.className="row";
+    r.innerHTML=`<div class="num">${i+1}</div><div class="nm">${n}</div><div class="yr">${y||""}</div>`;
+    host.appendChild(r);
+  });
+}
+
+function submitGuess(){
+  if(!state.team)return;
+  const raw=$("guess").value;
+  if(!norm(raw))return;
+  const fb=$("feedback"),form=$("form");
+  const qb=matchGuess(raw,state.idx);
+  $("guess").value="";$("guess").focus();
+  if(qb&&qb.ambiguous){
+    fb.className="feedback no";
+    fb.textContent=`${raw.trim()} matches multiple QBs. Please enter the full name.`;
+    form.classList.remove("shake");void form.offsetWidth;form.classList.add("shake");return;
+  }
+  if(!qb){
+    state.misses++;
+    fb.className="feedback no";fb.textContent=`✕ "${raw.trim()}" is incorrect or not in the database.`;
+    form.classList.remove("shake");void form.offsetWidth;form.classList.add("shake");return;
+  }
+  if(state.got.find(g=>g.n===qb.n)){
+    fb.className="feedback dup";fb.textContent=`${qb.n} is already on your list.`;return;
+  }
+  state.got.push(qb);
+  fb.className="feedback ok";
+  fb.textContent=`✓ Correct! ${qb.n}${qb.y?" ("+qb.y+")":""}`;
+  renderPips();renderGot();
+  if(state.got.length>=GOAL){setTimeout(()=>endGame(true),550);}
+}
+
+function latestYear(q){
+  if(!q.y)return 0;
+  if(q.y.includes("present"))return 9999;
+  const years=q.y.match(/\d{4}/g)||[];
+  return years.length?Math.max(...years.map(Number)):0;
+}
+function endGame(win){
+  const t=state.team;if(!t)return;
+  stopTimer();
+  const r=resultScreen;
+  r.className="screen result "+(win?"win":"lose");
+  const gotNames=new Set(state.got.map(g=>g.n));
+  const orderedQbs=t.qbs.slice().sort((a,b)=>latestYear(b)-latestYear(a)||a.n.localeCompare(b.n));
+  const pillsHtml=orderedQbs.map(q=>{
+    const isHit=gotNames.has(q.n);
+    return `<span class="pill${isHit?" hit":""}"><span class="pn">${q.n}</span>${q.y?` <span class="py">${q.y}</span>`:""}</span>`;
+  }).join("");
+  r.innerHTML=`
+    <div class="tag">${t.name}</div>
+    <div class="big">${win?"WIN":"GIVE UP"}</div>
+    <p>${win?`Cleared with <b>${GOAL}</b> correct! Misses: <b>${state.misses}</b>`:`Correct: <b>${state.got.length}</b> / ${GOAL}`}</p>
+    <div class="reveal">
+      <h4>${t.ab} Starting QBs (${t.qbs.length} listed, newest first)</h4>
+      <div class="list">${pillsHtml}</div>
+    </div>
+    <div class="share-row">
+      <button class="btn x-share" id="shareXBtn">Share Result on X</button>
+    </div>
+    <div class="actions">
+      <button class="btn primary" id="againBtn">Choose Another Team</button>
+      <button class="btn ghost" id="retryBtn">Retry This Team</button>
+    </div>`;
+  $("againBtn").onclick=openTeamModal;
+  $("retryBtn").onclick=()=>startTeam(t);
+  $("shareXBtn").onclick=()=>{
+    const text=win
+      ? `NFL Starting QB Gauntlet
+
+${t.ab} / ${t.name} cleared in ${formatElapsed(state.elapsed)}!
+Got ${GOAL} QBs correct.
+
+#NFLStartingQBGauntlet`
+      : `NFL Starting QB Gauntlet
+
+Took on ${t.ab} / ${t.name}!
+${state.got.length}/Got ${GOAL} QBs correct.
+
+#NFLStartingQBGauntlet`;
+    const url=`https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}`;
+    window.open(url,"_blank","noopener");
+  };
+  showResult();
+}
+
+$("homeBtn").onclick=showHome;
+$("openTeamSelectBtn").onclick=openTeamModal;
+$("randomBtn").onclick=()=>startTeam(TEAMS[Math.floor(Math.random()*TEAMS.length)]);
+$("howToBtn").onclick=openHowTo;
+$("ruleHelpBtn").onclick=openHowTo;
+$("teamModalClose").onclick=closeTeamModal;
+$("teamModalCancel").onclick=closeTeamModal;
+$("teamModalBackdrop").onclick=closeTeamModal;
+$("howToClose").onclick=closeHowTo;
+$("howToBackdrop").onclick=closeHowTo;
+$("submit").onclick=submitGuess;
+$("giveupBtn").onclick=()=>endGame(false);
+$("guess").addEventListener("keydown",e=>{if(e.key==="Enter")submitGuess();});
+renderHeroCopy();
+renderSampleTeams();
+showHome();
+</script>
+</body>
+</html>
